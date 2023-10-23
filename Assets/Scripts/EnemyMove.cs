@@ -29,7 +29,9 @@ public class EnemyMove : MoveComponent
         if (!player.GetComponent<PlayerController>().IsDead && !enemyController.IsDead)
         {
             Vector3 playerDirection = (player.transform.position - transform.position).normalized;
+            playerDirection = new Vector3(playerDirection.x, 0,playerDirection.z);
             Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
+
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime* speedCoef);
             personRb.AddForce(playerDirection * speed* speedCoef);
             personAnim.SetFloat("Speed_f", speed * speedCoef* animSpeedCoef);
