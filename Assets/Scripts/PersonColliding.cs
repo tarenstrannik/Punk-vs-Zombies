@@ -11,7 +11,7 @@ public class PersonColliding : MonoBehaviour
     {
         moveComponent=GetComponent<MoveComponent>();
         personController = GetComponent<PersonController>();
-        Debug.Log(personController);
+        //Debug.Log(personController);
     }
 
     // Update is called once per frame

@@ -67,6 +67,7 @@ public class EnemyMove : MoveComponent
         personRb.AddForce(direction * speed * speedCoef);
         
         personAnim.SetFloat("Speed_f", speed * speedCoef * animSpeedCoef);
+        //Debug.Log(speed * speedCoef * animSpeedCoef);
         personAnim.SetFloat("SpeedCoef_f", speedCoef);
     }
 }

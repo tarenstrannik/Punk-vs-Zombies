@@ -154,7 +154,7 @@ MonoBehaviour:
   speed: 4
   rotationSpeed: 20
   gravityCoef: 0.5
-  animSpeedCoef: 0.08
+  animSpeedCoef: 0.1
   randomMovementPhase: 2
   randDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &6603768000946474549
