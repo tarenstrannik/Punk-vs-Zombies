@@ -364,9 +364,9 @@ MonoBehaviour:
   speedSlow: 0.5
   speedNormal: 1
   speed: 5
-  rotationSpeed: 20
-  bottomLeft: {x: 0, y: 0, z: 0}
-  topRight: {x: 0, y: 0, z: 0}
+  rotationSpeed: 100
+  bottomLeft: {x: -12, y: 0, z: -6.5}
+  topRight: {x: 12, y: 0, z: 6.4}
 --- !u!1 &7385333000542080262
 GameObject:
   m_ObjectHideFlags: 0
