@@ -18,14 +18,12 @@ public class PersonController : MonoBehaviour
     public bool IsDead { get; protected set; } = false;
 
     // Start is called before the first frame update
-    void Start()
+    private void ReceiveDamage(float damage)
     {
-        
+        PersonHealth -= damage;
     }
-
-    // Update is called once per frame
-    void Update()
+    protected virtual void Start()
     {
-        
+
     }
 }

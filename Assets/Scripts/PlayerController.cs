@@ -21,8 +21,9 @@ public class PlayerController : PersonController
 
     private PlayerMove playerMove;
 
-    void Start()
-    {     
+    protected override void Start()
+    {
+        base.Start();
         playerAudioSource = GetComponent<AudioSource>();
         playerMove = GetComponent<PlayerMove>();
     }

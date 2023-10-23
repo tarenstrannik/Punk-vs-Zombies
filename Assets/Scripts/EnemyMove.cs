@@ -64,8 +64,9 @@ public class EnemyMove : MoveComponent
         
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * speedCoef);
-        personRb.AddForce(direction * speed * speedSlow);
-        personAnim.SetFloat("Speed_f", speed * speedSlow * animSpeedCoef);
+        personRb.AddForce(direction * speed * speedCoef);
+        
+        personAnim.SetFloat("Speed_f", speed * speedCoef * animSpeedCoef);
         personAnim.SetFloat("SpeedCoef_f", speedCoef);
     }
 }

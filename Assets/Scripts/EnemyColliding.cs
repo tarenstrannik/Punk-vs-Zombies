@@ -12,28 +12,19 @@ public class EnemyColliding : PersonColliding
 
     public float biteDelay = 1f;
     public float curBitingTimer = 0f;
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         enemyController=GetComponent<EnemyController>();
         enemyMove=GetComponent<EnemyMove>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     
-    private void OnCollisionEnter(Collision collision)
+    protected override void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Bullet") && !enemyController.IsDead)
-        {
-            //ReceiveDamage
-            enemyController.SendMessage("ReceiveDamage", collision.gameObject.GetComponent<BulletController>().bulletDamage);
-            Destroy(collision.gameObject);
-        }
-        else if(collision.gameObject.CompareTag("Player") && !enemyController.IsDead)
+        base.OnCollisionEnter(collision);
+        if(collision.gameObject.CompareTag("Player") && !enemyController.IsDead)
         {
             //Bite player
             collision.gameObject.SendMessage("ReceiveDamage", enemyController.enemyBiteDamage);

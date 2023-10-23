@@ -12,8 +12,9 @@ public class EnemyController : PersonController
 
     public float destroyDelay = 1.5f;
     // Start is called before the first frame update
-    void Start()
+    protected override void  Start()
     {
+        base.Start();
         moveToPlayer=GetComponent<EnemyMove>();  
     }
 
@@ -31,8 +32,5 @@ public class EnemyController : PersonController
     {
         Destroy(gameObject);
     }
-    private void ReceiveDamage(float damage)
-    {
-        PersonHealth -= damage;
-    }
+
 }

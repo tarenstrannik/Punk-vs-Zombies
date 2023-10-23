@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PersonColliding : MonoBehaviour
 {
-    private MoveComponent moveComponent;
+    protected MoveComponent moveComponent;
+    protected PersonController personController;
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         moveComponent=GetComponent<MoveComponent>();
+        personController = GetComponent<PersonController>();
+        Debug.Log(personController);
     }
 
     // Update is called once per frame
@@ -16,18 +19,28 @@ public class PersonColliding : MonoBehaviour
     {
         
     }
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Obstacle"))
         {
             moveComponent.SendMessage("SlowDown");
         }
     }
-    private void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Obstacle"))
         {
             moveComponent.SendMessage("SpeedUp");
+        }
+    }
+
+    protected virtual void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet") && !personController.IsDead)
+        {
+            //ReceiveDamage
+            personController.SendMessage("ReceiveDamage", collision.gameObject.GetComponent<BulletController>().bulletDamage);
+            Destroy(collision.gameObject);
         }
     }
 }
