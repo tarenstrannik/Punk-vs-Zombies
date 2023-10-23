@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject[] hardObstaclesPrefabs;
-    public GameObject[] softObstaclesPrefabs;
-    public GameObject[] enemiesPrefabs;
-    public GameObject[] powerupsPrefabs;
+    [SerializeField] private GameObject[] hardObstaclesPrefabs;
+    [SerializeField] private GameObject[] softObstaclesPrefabs;
+    [SerializeField] private GameObject[] enemiesPrefabs;
+    [SerializeField] private GameObject[] powerupsPrefabs;
 
-    public List<Material> backgroundTextures;
-    public GameObject plane;
+    [SerializeField] private List<Material> backgroundTextures;
+    [SerializeField] private GameObject plane;
     private MeshRenderer planeMeshRenderer;
-    private float powerupAndObstacleSpawnRangeX = 14f;
-    private float powerupAndObstacleSpawnRangeZ = 7.5f;
+    [SerializeField] private float powerupAndObstacleSpawnRangeX = 14f;
+    [SerializeField] private float powerupAndObstacleSpawnRangeZ = 7.5f;
 
-    public float powerupSpawnDelayMin = 3f;
-    public float powerupSpawnDelayMax = 10f;
-        
-    private float enemySpawnRange = 16;
+    [SerializeField] private float powerupSpawnDelayMin = 3f;
+    [SerializeField] private float powerupSpawnDelayMax = 10f;
+
+    [SerializeField] private float enemySpawnRangeX = 16;
+    [SerializeField] private float enemySpawnRangeZ = 10;
 
     private int enemyCount = 0;
     private int powerupCount = 0;
@@ -26,11 +27,11 @@ public class SpawnManager : MonoBehaviour
 
     private bool waitingForPowerUp = false;
 
-    private int minSoftObstacles = 0;
-    private int maxSoftObstacles = 6;
+    [SerializeField] private int minSoftObstacles = 0;
+    [SerializeField] private int maxSoftObstacles = 6;
 
-    private int minHardObstacles = 0;
-    private int maxHardObstacles = 6;
+    [SerializeField] private int minHardObstacles = 0;
+    [SerializeField] private int maxHardObstacles = 6;
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +70,7 @@ public class SpawnManager : MonoBehaviour
     private void PowerupGeneration()
     {
         int powerupIndex = Random.Range(0, powerupsPrefabs.Length);
-        Instantiate(powerupsPrefabs[powerupIndex], GeneratePAndOSpawnPosition() + new Vector3(0, powerupsPrefabs[powerupIndex].transform.localScale.y / 2, 0), powerupsPrefabs[powerupIndex].transform.rotation);
+        Instantiate(powerupsPrefabs[powerupIndex], GenerateSpawnPosition(powerupAndObstacleSpawnRangeX, powerupAndObstacleSpawnRangeZ, powerupsPrefabs[powerupIndex].transform.localScale.y / 2) , powerupsPrefabs[powerupIndex].transform.rotation);
         waitingForPowerUp = false;
     }
     private void SpawnEnemyWave(int enemiesToSpawn)
@@ -82,7 +83,7 @@ public class SpawnManager : MonoBehaviour
     private void EnemiesGeneration()
     {
         int enemyIndex = Random.Range(0, enemiesPrefabs.Length);
-        Instantiate(enemiesPrefabs[enemyIndex], GenerateEnemySpawnPosition()+new Vector3(0, enemiesPrefabs[enemyIndex].transform.localScale.y / 2, 0), enemiesPrefabs[enemyIndex].transform.rotation);
+        Instantiate(enemiesPrefabs[enemyIndex], GenerateSpawnPosition(enemySpawnRangeX, enemySpawnRangeZ, enemiesPrefabs[enemyIndex].transform.localScale.y / 2) , enemiesPrefabs[enemyIndex].transform.rotation);
     }
     private void DestroyObstacles()
     {
@@ -111,23 +112,17 @@ public class SpawnManager : MonoBehaviour
     {
         int obstacleIndex = Random.Range(0, obstaclesPrefabs.Length);
         float randYRot = Random.Range(0, 360);
-        GameObject obstTemp = Instantiate(obstaclesPrefabs[obstacleIndex], GeneratePAndOSpawnPosition()+new Vector3(0, obstaclesPrefabs[obstacleIndex].transform.localScale.y/2,0), obstaclesPrefabs[obstacleIndex].transform.rotation);
+        GameObject obstTemp = Instantiate(obstaclesPrefabs[obstacleIndex], GenerateSpawnPosition(powerupAndObstacleSpawnRangeX, powerupAndObstacleSpawnRangeZ, obstaclesPrefabs[obstacleIndex].transform.localScale.y / 2) , obstaclesPrefabs[obstacleIndex].transform.rotation);
         obstTemp.transform.Rotate(Vector3.up, randYRot);
 
     }
 
-    private Vector3 GeneratePAndOSpawnPosition()
+
+    private Vector3 GenerateSpawnPosition(float rangeX,float rangeZ, float deltaY)
     {
-        float spawnPosX = Random.Range(-powerupAndObstacleSpawnRangeX, powerupAndObstacleSpawnRangeX);
-        float spawnPosZ = Random.Range(-powerupAndObstacleSpawnRangeZ, powerupAndObstacleSpawnRangeZ);
-        Vector3 spawnPos = new Vector3(spawnPosX, 0, spawnPosZ);
-        return spawnPos;
-    }
-    private Vector3 GenerateEnemySpawnPosition()
-    {
-        float spawnPosX = Random.Range(-enemySpawnRange, enemySpawnRange);
-        float spawnPosZ = Random.Range(-enemySpawnRange, enemySpawnRange);
-        Vector3 spawnPos = new Vector3(spawnPosX, 0.5f, spawnPosZ);
+        float spawnPosX = Random.Range(-rangeX, rangeX);
+        float spawnPosZ = Random.Range(-rangeZ, rangeZ);
+        Vector3 spawnPos = new Vector3(spawnPosX, deltaY, spawnPosZ);
         return spawnPos;
     }
 }
