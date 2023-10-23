@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2250808476818041376}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.605}
+  m_LocalPosition: {x: 0, y: -0.155, z: 0.605}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -99,6 +99,8 @@ GameObject:
   - component: {fileID: 9180015396100676430}
   - component: {fileID: 3839425327700095942}
   - component: {fileID: 465701032952090781}
+  - component: {fileID: 1849931877394520364}
+  - component: {fileID: 7717986266278725002}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -214,14 +216,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 7256542726847729892, guid: 10af888afefcba54ebfd09ec5e91f29c, type: 3}
   shootingPoint: {fileID: 7385333000542080262}
-  speed: 1000
-  rotationSpeed: 100
-  slowSpeedCoef: 0.5
-  normalSpeedCoef: 1
-  playerHealth: 10
-  bottomLeft: {x: -14, y: 0, z: -7.5}
-  topRight: {x: 14, y: 0, z: 7.5}
-  isPlayerDead: 0
+  shootAudio: {fileID: 8300000, guid: 430a890fb607d471db897c36240711fa, type: 3}
+  damageAudio: {fileID: 8300000, guid: 4a812d476bd234fcdad7cc31ff6e9473, type: 3}
+  healingAudio: {fileID: 8300000, guid: dc028d92bd81f4023ae9b67676dad909, type: 3}
+  deathAudio: {fileID: 8300000, guid: ef2cde67276e7490e860213ae5393038, type: 3}
 --- !u!114 &3839425327700095942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +253,120 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.1, z: 0}
+--- !u!82 &1849931877394520364
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7010170502814202364}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &7717986266278725002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7010170502814202364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: decba905b046ad84db08c1e4c8b142ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedSlow: 0.5
+  speedNormal: 1
+  speed: 5
+  rotationSpeed: 20
+  bottomLeft: {x: 0, y: 0, z: 0}
+  topRight: {x: 0, y: 0, z: 0}
 --- !u!1 &7385333000542080262
 GameObject:
   m_ObjectHideFlags: 0

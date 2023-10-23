@@ -2,27 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : PersonController
 {
-    public float enemyHealth = 3f;
 
     public float enemyBiteDamage = 1f;
 
-    private MoveToPlayer moveToPlayer;
-    public bool isDead=false;
+    private EnemyMove moveToPlayer;
+
     public float destroyDelay = 1.5f;
     // Start is called before the first frame update
     void Start()
     {
-        moveToPlayer=GetComponent<MoveToPlayer>();  
+        moveToPlayer=GetComponent<EnemyMove>();  
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(enemyHealth<=0)
+        if(PersonHealth<=0)
         {
-            isDead = true;
+            IsDead = true;
             moveToPlayer.DieAnim();
             Invoke("DestroyBody", destroyDelay);
         }
@@ -33,6 +32,6 @@ public class EnemyController : MonoBehaviour
     }
     private void ReceiveDamage(float damage)
     {
-        enemyHealth -= damage;
+        PersonHealth -= damage;
     }
 }

@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyColliding : MonoBehaviour
+public class EnemyColliding : PersonColliding
 {
     // Start is called before the first frame update
 
     private EnemyController enemyController;
-    private MoveToPlayer enemyMove;
+    private EnemyMove enemyMove;
  
 
     public float biteDelay = 1f;
@@ -15,7 +15,7 @@ public class EnemyColliding : MonoBehaviour
     void Start()
     {
         enemyController=GetComponent<EnemyController>();
-        enemyMove=GetComponent<MoveToPlayer>();
+        enemyMove=GetComponent<EnemyMove>();
     }
 
     // Update is called once per frame
@@ -24,29 +24,16 @@ public class EnemyColliding : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.CompareTag("Obstacle"))
-        {
-            enemyMove.SendMessage("SlowDown");
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Obstacle"))
-        {
-            enemyMove.SendMessage("SpeedUp");
-        }
-    }
+    
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Bullet") && !enemyController.isDead)
+        if(collision.gameObject.CompareTag("Bullet") && !enemyController.IsDead)
         {
             //ReceiveDamage
             enemyController.SendMessage("ReceiveDamage", collision.gameObject.GetComponent<BulletController>().bulletDamage);
             Destroy(collision.gameObject);
         }
-        else if(collision.gameObject.CompareTag("Player") && !enemyController.isDead)
+        else if(collision.gameObject.CompareTag("Player") && !enemyController.IsDead)
         {
             //Bite player
             collision.gameObject.SendMessage("ReceiveDamage", enemyController.enemyBiteDamage);
@@ -56,7 +43,7 @@ public class EnemyColliding : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
 
-        if (collision.gameObject.CompareTag("Player") && !enemyController.isDead)
+        if (collision.gameObject.CompareTag("Player") && !enemyController.IsDead)
         {
             curBitingTimer -= Time.deltaTime;
             if (curBitingTimer <= 0)
