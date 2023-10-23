@@ -149,11 +149,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81700c3dfeeae6b40aa12dbb1dabd23e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
-  rotationSpeed: 20
-  speedCoef: 1
   speedSlow: 0.7
   speedNormal: 1
+  speed: 4
+  rotationSpeed: 20
   gravityCoef: 0.5
   animSpeedCoef: 0.08
   randomMovementPhase: 2
@@ -184,9 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba34a2d840d025b46903e1bb19a8e7f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 3
+  personHealth: 3
   enemyBiteDamage: 1
-  isDead: 0
   destroyDelay: 1.5
 --- !u!1001 &3408902036168036443
 PrefabInstance:
