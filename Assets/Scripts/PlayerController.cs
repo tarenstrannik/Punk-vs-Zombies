@@ -18,9 +18,11 @@ public class PlayerController : PersonController
     [SerializeField] private AudioClip damageAudio;
     [SerializeField] private AudioClip healingAudio;
     [SerializeField] private AudioClip deathAudio;
-
+    [SerializeField] private Canvas uiDisplayObject;
+    private UIDisplay uiDisplay;
     private PlayerMove playerMove;
 
+    private bool isGameOver = false;
     protected override void Awake()
     {
         base.Awake();
@@ -32,12 +34,14 @@ public class PlayerController : PersonController
         playerAudioSource = GetComponent<AudioSource>();
         playerMove = GetComponent<PlayerMove>();
         ObjectPooler.SharedInstance.PushObjectToPool(bulletPrefab, 0);
+        uiDisplay= uiDisplayObject.GetComponent<UIDisplay>();
+        uiDisplay.SendMessage("UpdateHealth", PersonHealth);
     }
 
     // Update is called once per frame
     protected override void Update()
     {
-
+        base.Update();
         if (!IsDead)
         {
             PlayerShoot();
@@ -45,7 +49,7 @@ public class PlayerController : PersonController
             playerMove.SendMessage("ConstraintPlayer");
         }
 
-        if (PersonHealth <= 0 && !IsDead)
+        if (IsDead && !isGameOver)
         {
             GameOver();
         }
@@ -54,13 +58,14 @@ public class PlayerController : PersonController
     }
     private void GameOver()
     {
+        isGameOver = true;
         playerAudioSource.PlayOneShot(deathAudio);
     }
-    private void ReceiveDamage(float damage)
+    protected override void ReceiveDamage(float damage)
     {
+        base.ReceiveDamage(damage);
         if (!IsDead)
         {
-            PersonHealth -= damage;
             if (damage > 0)
             {
                 playerAudioSource.PlayOneShot(damageAudio);
@@ -69,6 +74,7 @@ public class PlayerController : PersonController
             {
                 playerAudioSource.PlayOneShot(healingAudio);
             }
+            uiDisplay.SendMessage("UpdateHealth", PersonHealth);
         }
     }
     private void PlayerShoot()

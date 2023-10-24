@@ -23,7 +23,7 @@ public class PersonController : MonoBehaviour
     public bool IsDead { get; protected set; } = false;
 
     // Start is called before the first frame update
-    private void ReceiveDamage(float damage)
+    protected virtual void ReceiveDamage(float damage)
     {
         PersonHealth -= damage;
     }
