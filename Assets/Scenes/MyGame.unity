@@ -413,6 +413,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1952434197}
   - component: {fileID: 1952434198}
+  - component: {fileID: 1952434199}
   m_Layer: 0
   m_Name: SpawnManager
   m_TagString: Untagged
@@ -466,8 +467,31 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 851545f5ac5a16e4fab7a2322e7df9f3, type: 2}
   - {fileID: 2100000, guid: 9fcd8ff220cdf64459cb263d7d1f938f, type: 2}
   plane: {fileID: 2054167921}
+  powerupAndObstacleSpawnRangeX: 14
+  powerupAndObstacleSpawnRangeZ: 7.5
   powerupSpawnDelayMin: 3
   powerupSpawnDelayMax: 10
+  enemySpawnRangeX: 16
+  enemySpawnRangeZ: 10
+  maxPowerupCount: 1
+  minSoftObstacles: 0
+  maxSoftObstacles: 6
+  minHardObstacles: 0
+  maxHardObstacles: 6
+--- !u!114 &1952434199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952434196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d461767c9ce1d7647a872d7debb262f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountToPool: 0
+  isPoolingFinished: 0
 --- !u!1 &2054167921
 GameObject:
   m_ObjectHideFlags: 0

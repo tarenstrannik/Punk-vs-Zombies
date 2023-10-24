@@ -26,6 +26,7 @@ public class SpawnManager : MonoBehaviour
 
     private int enemyCount = 0;
 
+    private int powerupCount = 0;
     [SerializeField] private int maxPowerupCount = 1;
     private int waveNumber = 0;
 
@@ -33,23 +34,11 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private int minSoftObstacles = 0;
     [SerializeField] private int maxSoftObstacles = 6;
-    public int MaxSoftObstacles
-    {
-        get
-        {
-            return maxSoftObstacles;
-        }
-    }
+
 
     [SerializeField] private int minHardObstacles = 0;
     [SerializeField] private int maxHardObstacles = 6;
-    public int MaxHardObstacles
-    {
-        get
-        {
-            return MaxHardObstacles;
-        }
-    }
+
 
     private bool isStarted = false;
     // Start is called before the first frame update
@@ -81,26 +70,7 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(WaitForPooling());
 
     }
-    public int MaxObjectCount(GameObject gameObject)
-    {
-        foreach (GameObject gameObj in hardObstaclesPrefabs)
-        {
-            if(gameObj== gameObject)
-            {
-                return maxHardObstacles;
-            }
-        }
 
-        foreach (GameObject gameObj in softObstaclesPrefabs)
-        {
-            if (gameObj == gameObject)
-            {
-                return maxSoftObstacles;
-            }
-        }
-
-        return 0;
-    }
     // Update is called once per frame
     void Update()
     {
@@ -169,7 +139,7 @@ public class SpawnManager : MonoBehaviour
         if (pooledEnemy != null)
         {
             pooledEnemy.SetActive(true); // activate it
-            pooledEnemy.GetComponent<PersonController>().DefaultHealth();
+            pooledEnemy.GetComponent<PersonController>().Revive();
             pooledEnemy.transform.position = GenerateSpawnPosition(enemySpawnRangeX, enemySpawnRangeZ, enemiesPrefabs[enemyIndex].transform.localScale.y / 2);
         }
 
@@ -185,8 +155,8 @@ public class SpawnManager : MonoBehaviour
 
     private void GenerateObstacles()
     {
-        int randSoftObstacles = Random.Range(minSoftObstacles, MaxSoftObstacles);
-        int randHardObstacles = Random.Range(minHardObstacles, MaxHardObstacles);
+        int randSoftObstacles = Random.Range(minSoftObstacles, maxSoftObstacles);
+        int randHardObstacles = Random.Range(minHardObstacles, maxHardObstacles);
         for (var i = 0; i < randSoftObstacles; i++)
         {
             ObstaclesGeneration(softObstaclesPrefabs);

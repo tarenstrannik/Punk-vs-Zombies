@@ -44,8 +44,9 @@ public class PersonController : MonoBehaviour
         }
     }
 
-    public void DefaultHealth()
+    public void Revive()
     {
+        IsDead = false;
         personHealth = maxPersonHealth;
     }
 }

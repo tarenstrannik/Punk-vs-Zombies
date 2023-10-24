@@ -77,8 +77,14 @@ public class ObjectPooler : MonoBehaviour
                     return objList[i];
                 }
             }
+
+            GameObject obj = (GameObject)Instantiate(objectType);
+            obj.SetActive(true);
+            objList.Add(obj);
+            obj.transform.SetParent(this.transform);
+            return obj;
             // otherwise, return null   
-            return null;
+            //return null;
         }
         else
         {
