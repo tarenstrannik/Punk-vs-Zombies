@@ -23,7 +23,7 @@ public class PlayerColliding : PersonColliding
         base.OnTriggerEnter(other);
         if (other.gameObject.CompareTag("Powerup"))
         {
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
             playerController.SendMessage("ReceiveDamage", -other.gameObject.GetComponent<PowerupController>().powerupStrength);
             //player recieved powerup
         }

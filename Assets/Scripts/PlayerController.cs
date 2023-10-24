@@ -29,7 +29,7 @@ public class PlayerController : PersonController
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
 
         if (!IsDead)
@@ -41,7 +41,6 @@ public class PlayerController : PersonController
 
         if (PersonHealth <= 0 && !IsDead)
         {
-
             GameOver();
         }
 
@@ -49,8 +48,6 @@ public class PlayerController : PersonController
     }
     private void GameOver()
     {
-        IsDead = true;
-        playerMove.SendMessage("DieAnim");
         playerAudioSource.PlayOneShot(deathAudio);
     }
     private void ReceiveDamage(float damage)

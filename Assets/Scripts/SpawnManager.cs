@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject[] softObstaclesPrefabs;
     [SerializeField] private GameObject[] enemiesPrefabs;
     [SerializeField] private GameObject[] powerupsPrefabs;
+
+    
 
     [SerializeField] private List<Material> backgroundTextures;
     [SerializeField] private GameObject plane;
@@ -22,7 +25,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float enemySpawnRangeZ = 10;
 
     private int enemyCount = 0;
-    private int powerupCount = 0;
+
+    [SerializeField] private int maxPowerupCount = 1;
     private int waveNumber = 0;
 
     private bool waitingForPowerUp = false;
@@ -47,10 +51,35 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    private bool isStarted = false;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        foreach (GameObject gameObj in hardObstaclesPrefabs)
+        {
+            ObjectPooler.SharedInstance.PushObjectToPool(gameObj, maxHardObstacles);
+        }
+        foreach (GameObject gameObj in softObstaclesPrefabs)
+        {
+            ObjectPooler.SharedInstance.PushObjectToPool(gameObj, maxSoftObstacles);
+        }
+        foreach (GameObject gameObj in enemiesPrefabs)
+        {
+            ObjectPooler.SharedInstance.PushObjectToPool(gameObj,0);
+        }
+        foreach (GameObject gameObj in powerupsPrefabs)
+        {
+            ObjectPooler.SharedInstance.PushObjectToPool(gameObj, maxPowerupCount);
+        }
+    }
+
     void Start()
     {
         planeMeshRenderer = plane.GetComponent<MeshRenderer>();
+
+        StartCoroutine(WaitForPooling());
+
     }
     public int MaxObjectCount(GameObject gameObject)
     {
@@ -75,25 +104,45 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        if (enemyCount == 0)
-        {
-            waveNumber++;
-            SpawnEnemyWave(waveNumber);
-            DestroyObstacles();
-            GenerateObstacles();
-            GenerateBackground();
-
+        if (isStarted)
+        { 
+            enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+            if (enemyCount == 0)
+            {
+                StartRound();
+            }
+            powerupCount = GameObject.FindGameObjectsWithTag("Powerup").Length;
+            if (powerupCount == 0 && !waitingForPowerUp)
+            {
+                waitingForPowerUp = true;
+                float powerupTimeout = Random.Range(powerupSpawnDelayMin, powerupSpawnDelayMax);
+                Invoke("PowerupGeneration", powerupTimeout);
+            }
         }
-        powerupCount = GameObject.FindGameObjectsWithTag("Powerup").Length;
-        if(powerupCount==0 && !waitingForPowerUp)
-        {
-            waitingForPowerUp = true;
-            float powerupTimeout = Random.Range(powerupSpawnDelayMin, powerupSpawnDelayMax);
-            Invoke("PowerupGeneration", powerupTimeout);
-        }
-
     }
+    IEnumerator WaitForPooling()
+    {
+        while (true)
+        {
+            if (ObjectPooler.SharedInstance.isPoolingFinished)
+            {
+                StartRound();
+                yield break;
+            }
+            yield return null;
+        }
+    }
+    private void StartRound()
+    {
+        isStarted = true;
+        waveNumber++;
+        SpawnEnemyWave(waveNumber);
+        DestroyObstacles();
+        GenerateObstacles();
+        GenerateBackground();
+    }
+
+
 
     private void GenerateBackground()
     {
@@ -116,14 +165,21 @@ public class SpawnManager : MonoBehaviour
     private void EnemiesGeneration()
     {
         int enemyIndex = Random.Range(0, enemiesPrefabs.Length);
-        Instantiate(enemiesPrefabs[enemyIndex], GenerateSpawnPosition(enemySpawnRangeX, enemySpawnRangeZ, enemiesPrefabs[enemyIndex].transform.localScale.y / 2) , enemiesPrefabs[enemyIndex].transform.rotation);
+        GameObject pooledEnemy = ObjectPooler.SharedInstance.GetPooledObject(enemiesPrefabs[enemyIndex]);
+        if (pooledEnemy != null)
+        {
+            pooledEnemy.SetActive(true); // activate it
+            pooledEnemy.GetComponent<PersonController>().DefaultHealth();
+            pooledEnemy.transform.position = GenerateSpawnPosition(enemySpawnRangeX, enemySpawnRangeZ, enemiesPrefabs[enemyIndex].transform.localScale.y / 2);
+        }
+
     }
     private void DestroyObstacles()
     {
         GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         foreach( GameObject obstacle in obstacles)
         {
-            Destroy(obstacle);
+            obstacle.SetActive(false);
         }
     }
 
@@ -145,9 +201,15 @@ public class SpawnManager : MonoBehaviour
     {
         int obstacleIndex = Random.Range(0, obstaclesPrefabs.Length);
         float randYRot = Random.Range(0, 360);
-        GameObject obstTemp = Instantiate(obstaclesPrefabs[obstacleIndex], GenerateSpawnPosition(powerupAndObstacleSpawnRangeX, powerupAndObstacleSpawnRangeZ, obstaclesPrefabs[obstacleIndex].transform.localScale.y / 2) , obstaclesPrefabs[obstacleIndex].transform.rotation);
-        obstTemp.transform.Rotate(Vector3.up, randYRot);
 
+        GameObject pooledObstacle = ObjectPooler.SharedInstance.GetPooledObject(obstaclesPrefabs[obstacleIndex]);
+        if (pooledObstacle != null)
+        {
+
+            pooledObstacle.SetActive(true); // activate it
+            pooledObstacle.transform.Rotate(Vector3.up, randYRot);
+            pooledObstacle.transform.position = GenerateSpawnPosition(powerupAndObstacleSpawnRangeX, powerupAndObstacleSpawnRangeZ, obstaclesPrefabs[obstacleIndex].transform.localScale.y / 2);
+        }
     }
 
 

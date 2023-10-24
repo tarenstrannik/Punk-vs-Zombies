@@ -14,7 +14,7 @@ public class ObjectPooler : MonoBehaviour
 {
     public static ObjectPooler SharedInstance;
    
-    [SerializeField] private GameObject[] objectToPool;
+    private Dictionary<GameObject, int> objectToPoolDictionary;
     private Dictionary<GameObject, List<GameObject>> objectsDictionary;
 
     [SerializeField] private int amountToPool=0;
@@ -23,23 +23,33 @@ public class ObjectPooler : MonoBehaviour
     void Awake()
     {
         SharedInstance = this;
+        objectToPoolDictionary = new Dictionary<GameObject, int>();
         objectsDictionary = new Dictionary<GameObject, List<GameObject>>();
-        foreach(GameObject gameObj in objectToPool)
-        {
-            objectsDictionary.Add(gameObj, new List<GameObject> {});
-        }
     }
-
+    public void PushObjectToPool(GameObject pushObject, int count)
+    {
+        objectToPoolDictionary.Add(pushObject, count);
+    }
     // Start is called before the first frame update
     void Start()
     {
+        
+        foreach (KeyValuePair <GameObject,int> poolPair in objectToPoolDictionary)
+        {
+            objectsDictionary.Add(poolPair.Key, new List<GameObject> { });
+        }
         foreach (KeyValuePair<GameObject,List<GameObject>> pair in objectsDictionary)
         {
-
-            if (amountToPool == 0)
+            int objCount = 0;
+            if (objectToPoolDictionary.TryGetValue(pair.Key, out objCount))
             {
-                amountToPool = GetComponent<SpawnManager>().MaxObjectCount(pair.Key);
+                amountToPool = objCount;
             }
+            else
+            {
+                amountToPool = 0;
+            }
+
             // Loop through list of pooled objects,deactivating them and adding them to the list 
            
             for (int i = 0; i < amountToPool; i++)

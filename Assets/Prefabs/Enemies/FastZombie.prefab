@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba34a2d840d025b46903e1bb19a8e7f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  personHealth: 2
+  maxPersonHealth: 2
   enemyBiteDamage: 0.7
   destroyDelay: 1.5
 --- !u!1001 &4699603527810497782
