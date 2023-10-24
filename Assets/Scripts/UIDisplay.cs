@@ -6,9 +6,9 @@ public class UIDisplay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private GameObject pauseScreen;
 
-
-    private void Start()
+   private void Start()
     {
         UpdateScore(0);
     }
@@ -20,5 +20,16 @@ public class UIDisplay : MonoBehaviour
     {
         scoreText.text = $"Score: {score}";
     }
-
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseAction();
+        }
+    }
+    public void PauseAction()
+    {
+        Time.timeScale = Time.timeScale == 1f ? 0f : 1f;
+        pauseScreen.SetActive(!pauseScreen.activeSelf);
+    }
 }

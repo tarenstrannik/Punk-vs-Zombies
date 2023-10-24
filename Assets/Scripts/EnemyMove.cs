@@ -26,7 +26,7 @@ public class EnemyMove : MoveComponent
     // Update is called once per frame
     void Update()
     {
-        if (!Player.GetComponent<PlayerController>().IsDead && !enemyController.IsDead)
+        if (!Player.GetComponent<PlayerController>().IsDead && !enemyController.IsDead && Time.timeScale > 0f)
         {
             Vector3 playerDirection = (Player.transform.position - transform.position).normalized;
             MovementAtDirection(playerDirection);
@@ -39,8 +39,9 @@ public class EnemyMove : MoveComponent
     }
     void FixedUpdate()
     {
+        if (Time.timeScale > 0f)
         personRb.AddForce(Physics.gravity * gravityCoef, ForceMode.Acceleration);
-        }
+    }
     void RandomMovement()
     {
         if (curRandomMovementTimer <= 0f)
