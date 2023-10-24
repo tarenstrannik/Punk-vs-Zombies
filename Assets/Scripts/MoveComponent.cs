@@ -14,7 +14,7 @@ public class MoveComponent : MonoBehaviour
     [SerializeField] protected float speed = 5f;
     [SerializeField] protected float rotationSpeed = 20f;
     // Start is called before the first frame update
-    void Awake()
+    void OnEnable()
     {
         personAnim = GetComponentInChildren<Animator>();
         personAnim.SetBool("Static_b", true);
@@ -42,5 +42,6 @@ public class MoveComponent : MonoBehaviour
     {
         personAnim.SetFloat("Speed_f", 0);
         personAnim.SetBool("Death_b", true);
+
     }
 }

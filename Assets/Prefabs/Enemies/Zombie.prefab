@@ -185,6 +185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxPersonHealth: 5
   enemyBiteDamage: 1
+  enemyBiteHeal: 1
+  scoresForEnemy: 1
   destroyDelay: 1.5
 --- !u!1001 &3408902036168036443
 PrefabInstance:

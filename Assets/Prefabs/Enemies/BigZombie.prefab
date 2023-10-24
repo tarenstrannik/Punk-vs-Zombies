@@ -186,6 +186,7 @@ MonoBehaviour:
   maxPersonHealth: 10
   enemyBiteDamage: 5
   enemyBiteHeal: 5
+  scoresForEnemy: 5
   destroyDelay: 1.5
 --- !u!1001 &2281640574706365880
 PrefabInstance:

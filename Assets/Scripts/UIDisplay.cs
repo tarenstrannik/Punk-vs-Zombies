@@ -18,7 +18,7 @@ public class UIDisplay : MonoBehaviour
     }
     private void UpdateScore(int score)
     {
-        healthText.text = $"Health: {score}";
+        scoreText.text = $"Score: {score}";
     }
 
 }

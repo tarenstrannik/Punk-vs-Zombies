@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyMove : MoveComponent
 {
 
-    private GameObject player;
+    public GameObject Player { get; private set; }
     
     private EnemyController enemyController;
 
@@ -17,21 +17,21 @@ public class EnemyMove : MoveComponent
     void Start()
     {        
         enemyController = GetComponent<EnemyController>();
-        
 
-        player = GameObject.Find("Player");
+
+        Player = GameObject.Find("Player");
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!player.GetComponent<PlayerController>().IsDead && !enemyController.IsDead)
+        if (!Player.GetComponent<PlayerController>().IsDead && !enemyController.IsDead)
         {
-            Vector3 playerDirection = (player.transform.position - transform.position).normalized;
+            Vector3 playerDirection = (Player.transform.position - transform.position).normalized;
             MovementAtDirection(playerDirection);
         }
-        else if(player.GetComponent<PlayerController>().IsDead)
+        else if(Player.GetComponent<PlayerController>().IsDead)
         {
             RandomMovement();
         }

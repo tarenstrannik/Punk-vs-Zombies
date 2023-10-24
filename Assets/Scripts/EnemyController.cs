@@ -29,12 +29,17 @@ public class EnemyController : PersonController
             enemyBiteHeal = value;
         }
     }
+
+    [SerializeField] private int scoresForEnemy = 1;
     
     [SerializeField] private float destroyDelay = 1.5f;
+
+    private PlayerController playerController;
     // Start is called before the first frame update
     protected override void Start()
     {
-        base.Start(); 
+        base.Start();
+        playerController = GetComponent<EnemyMove>().Player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -42,6 +47,7 @@ public class EnemyController : PersonController
     {
         if (PersonHealth <= 0 && !IsDead)
         {
+            playerController.SendMessage("UpdateScore", scoresForEnemy);
             Invoke("DestroyBody", destroyDelay);
         }
         base.Update();
