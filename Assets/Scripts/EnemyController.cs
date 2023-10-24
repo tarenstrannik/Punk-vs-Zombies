@@ -6,9 +6,31 @@ using UnityEngine;
 public class EnemyController : PersonController
 {
 
-    public float enemyBiteDamage = 1f;
-
-    public float destroyDelay = 1.5f;
+    [SerializeField] private float enemyBiteDamage = 1f;
+    public float EnemyBiteDamage { 
+        get
+        {
+            return enemyBiteDamage;
+        } 
+        private set
+        {
+            enemyBiteDamage = value;
+        }
+    }
+    [SerializeField] private float enemyBiteHeal = 1f;
+    public float EnemyBiteHeal
+    {
+        get
+        {
+            return enemyBiteHeal;
+        }
+        private set
+        {
+            enemyBiteHeal = value;
+        }
+    }
+    
+    [SerializeField] private float destroyDelay = 1.5f;
     // Start is called before the first frame update
     protected override void Start()
     {

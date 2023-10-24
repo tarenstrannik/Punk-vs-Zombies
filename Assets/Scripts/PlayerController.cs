@@ -24,14 +24,14 @@ public class PlayerController : PersonController
     protected override void Awake()
     {
         base.Awake();
-        ObjectPooler.SharedInstance.PushObjectToPool(bulletPrefab, 0);
+        
     }
     protected override void Start()
     {
         base.Start();
         playerAudioSource = GetComponent<AudioSource>();
         playerMove = GetComponent<PlayerMove>();
-        
+        ObjectPooler.SharedInstance.PushObjectToPool(bulletPrefab, 0);
     }
 
     // Update is called once per frame

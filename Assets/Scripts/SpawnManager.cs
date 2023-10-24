@@ -45,6 +45,12 @@ public class SpawnManager : MonoBehaviour
 
     private void Awake()
     {
+        
+    }
+
+    void Start()
+    {
+        planeMeshRenderer = plane.GetComponent<MeshRenderer>();
         foreach (GameObject gameObj in hardObstaclesPrefabs)
         {
             ObjectPooler.SharedInstance.PushObjectToPool(gameObj, maxHardObstacles);
@@ -55,18 +61,12 @@ public class SpawnManager : MonoBehaviour
         }
         foreach (GameObject gameObj in enemiesPrefabs)
         {
-            ObjectPooler.SharedInstance.PushObjectToPool(gameObj,0);
+            ObjectPooler.SharedInstance.PushObjectToPool(gameObj, 0);
         }
         foreach (GameObject gameObj in powerupsPrefabs)
         {
             ObjectPooler.SharedInstance.PushObjectToPool(gameObj, maxPowerupCount);
         }
-    }
-
-    void Start()
-    {
-        planeMeshRenderer = plane.GetComponent<MeshRenderer>();
-
         StartRound();
 
     }

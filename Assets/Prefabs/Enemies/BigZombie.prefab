@@ -183,8 +183,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba34a2d840d025b46903e1bb19a8e7f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  personHealth: 10
+  maxPersonHealth: 10
   enemyBiteDamage: 5
+  enemyBiteHeal: 5
   destroyDelay: 1.5
 --- !u!1001 &2281640574706365880
 PrefabInstance:

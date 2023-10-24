@@ -26,10 +26,15 @@ public class EnemyColliding : PersonColliding
         base.OnCollisionEnter(collision);
         if(collision.gameObject.CompareTag("Player") && !enemyController.IsDead)
         {
-            //Bite player
-            collision.gameObject.SendMessage("ReceiveDamage", enemyController.enemyBiteDamage);
-            curBitingTimer = biteDelay;
+            Bite(collision.gameObject);
         }
+    }
+    private void Bite(GameObject biteTarget)
+    {
+        //Bite player
+        biteTarget.SendMessage("ReceiveDamage", enemyController.EnemyBiteDamage);
+        enemyController.SendMessage("ReceiveDamage", -enemyController.EnemyBiteHeal);
+        curBitingTimer = biteDelay;
     }
     private void OnCollisionStay(Collision collision)
     {
@@ -38,10 +43,9 @@ public class EnemyColliding : PersonColliding
         {
             curBitingTimer -= Time.deltaTime;
             if (curBitingTimer <= 0)
-            { 
-            //Bite player
-                collision.gameObject.SendMessage("ReceiveDamage", enemyController.enemyBiteDamage);
-                curBitingTimer = biteDelay;
+            {
+                //Bite player
+                Bite(collision.gameObject);
             }
 
         }
