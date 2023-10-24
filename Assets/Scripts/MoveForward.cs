@@ -5,9 +5,9 @@ using UnityEngine;
 public class MoveForward : MonoBehaviour
 {
     private Rigidbody bulletRb;
-    public float speed=50f;
-    private float rangeX = 20f;
-    private float rangeZ = 20f;
+    [SerializeField] private float speed=50f;
+    [SerializeField] private float rangeX = 20f;
+    [SerializeField] private float rangeZ = 20f;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +21,7 @@ public class MoveForward : MonoBehaviour
         //bulletRb.AddForce(Vector3.forward * speed * Time.deltaTime);
         if (transform.position.x<-rangeX || transform.position.x > rangeX || transform.position.z < -rangeZ || transform.position.z > rangeZ)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

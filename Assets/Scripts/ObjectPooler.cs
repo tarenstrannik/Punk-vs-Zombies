@@ -14,54 +14,44 @@ public class ObjectPooler : MonoBehaviour
 {
     public static ObjectPooler SharedInstance;
    
-    private Dictionary<GameObject, int> objectToPoolDictionary;
+    
     private Dictionary<GameObject, List<GameObject>> objectsDictionary;
 
-    [SerializeField] private int amountToPool=0;
 
-    public bool isPoolingFinished = false;
     void Awake()
     {
         SharedInstance = this;
-        objectToPoolDictionary = new Dictionary<GameObject, int>();
+       
         objectsDictionary = new Dictionary<GameObject, List<GameObject>>();
     }
     public void PushObjectToPool(GameObject pushObject, int count)
     {
-        objectToPoolDictionary.Add(pushObject, count);
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-        foreach (KeyValuePair <GameObject,int> poolPair in objectToPoolDictionary)
+        List<GameObject> objList;
+        if (objectsDictionary.TryGetValue(pushObject, out objList))
         {
-            objectsDictionary.Add(poolPair.Key, new List<GameObject> { });
-        }
-        foreach (KeyValuePair<GameObject,List<GameObject>> pair in objectsDictionary)
-        {
-            int objCount = 0;
-            if (objectToPoolDictionary.TryGetValue(pair.Key, out objCount))
+            for (int i = 0; i < count; i++)
             {
-                amountToPool = objCount;
-            }
-            else
-            {
-                amountToPool = 0;
-            }
-
-            // Loop through list of pooled objects,deactivating them and adding them to the list 
-           
-            for (int i = 0; i < amountToPool; i++)
-            {
-                GameObject obj = (GameObject)Instantiate(pair.Key);
+                GameObject obj = (GameObject)Instantiate(pushObject);
                 obj.SetActive(false);
-                pair.Value.Add(obj);
+                objList.Add(obj);
                 obj.transform.SetParent(this.transform); // set as children of Spawn Manager
             }
         }
-        isPoolingFinished = true;
+        else
+        {
+            objectsDictionary.Add(pushObject, new List<GameObject> { });
+            
+            for (int i = 0; i < count; i++)
+            {
+                GameObject obj = (GameObject)Instantiate(pushObject);
+                obj.SetActive(false);
+                objectsDictionary[pushObject].Add(obj);
+                obj.transform.SetParent(this.transform); // set as children of Spawn Manager
+            }
+        }
+        
     }
+
 
     public GameObject GetPooledObject(GameObject objectType)
     {
@@ -79,7 +69,7 @@ public class ObjectPooler : MonoBehaviour
             }
 
             GameObject obj = (GameObject)Instantiate(objectType);
-            obj.SetActive(true);
+            obj.SetActive(false);
             objList.Add(obj);
             obj.transform.SetParent(this.transform);
             return obj;

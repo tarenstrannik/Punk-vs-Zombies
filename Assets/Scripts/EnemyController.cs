@@ -18,15 +18,17 @@ public class EnemyController : PersonController
     // Update is called once per frame
     protected override void Update()
     {
-        base.Update();
-        if(PersonHealth<=0)
+        if (PersonHealth <= 0 && !IsDead)
         {
             Invoke("DestroyBody", destroyDelay);
         }
+        base.Update();
+        
     }
     void DestroyBody()
     {
         gameObject.SetActive(false);
+       
     }
 
 }

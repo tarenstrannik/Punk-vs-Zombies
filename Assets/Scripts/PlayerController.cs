@@ -21,11 +21,17 @@ public class PlayerController : PersonController
 
     private PlayerMove playerMove;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        ObjectPooler.SharedInstance.PushObjectToPool(bulletPrefab, 0);
+    }
     protected override void Start()
     {
         base.Start();
         playerAudioSource = GetComponent<AudioSource>();
         playerMove = GetComponent<PlayerMove>();
+        
     }
 
     // Update is called once per frame
@@ -70,7 +76,16 @@ public class PlayerController : PersonController
         if (Input.GetButtonDown("Shoot"))
         {
             playerAudioSource.PlayOneShot(shootAudio);
-            Instantiate(bulletPrefab, shootingPoint.transform.position, shootingPoint.transform.rotation);
+
+            GameObject pooledBullet = ObjectPooler.SharedInstance.GetPooledObject(bulletPrefab);
+            if (pooledBullet != null)
+            {
+                pooledBullet.SetActive(true); // activate it
+
+                pooledBullet.transform.position = shootingPoint.transform.position;
+                pooledBullet.transform.rotation = shootingPoint.transform.rotation;
+            }
+           
         }
     }
    

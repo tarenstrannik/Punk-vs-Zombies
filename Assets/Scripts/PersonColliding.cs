@@ -40,7 +40,7 @@ public class PersonColliding : MonoBehaviour
         {
             //ReceiveDamage
             personController.SendMessage("ReceiveDamage", collision.gameObject.GetComponent<BulletController>().bulletDamage);
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
         }
     }
 }

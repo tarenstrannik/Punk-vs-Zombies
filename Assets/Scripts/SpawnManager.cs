@@ -67,7 +67,7 @@ public class SpawnManager : MonoBehaviour
     {
         planeMeshRenderer = plane.GetComponent<MeshRenderer>();
 
-        StartCoroutine(WaitForPooling());
+        StartRound();
 
     }
 
@@ -90,22 +90,12 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
-    IEnumerator WaitForPooling()
-    {
-        while (true)
-        {
-            if (ObjectPooler.SharedInstance.isPoolingFinished)
-            {
-                StartRound();
-                yield break;
-            }
-            yield return null;
-        }
-    }
     private void StartRound()
     {
+        //Debug.Log("S" + Time.time);
         isStarted = true;
         waveNumber++;
+
         SpawnEnemyWave(waveNumber);
         DestroyObstacles();
         GenerateObstacles();
@@ -122,7 +112,15 @@ public class SpawnManager : MonoBehaviour
     private void PowerupGeneration()
     {
         int powerupIndex = Random.Range(0, powerupsPrefabs.Length);
-        Instantiate(powerupsPrefabs[powerupIndex], GenerateSpawnPosition(powerupAndObstacleSpawnRangeX, powerupAndObstacleSpawnRangeZ, powerupsPrefabs[powerupIndex].transform.localScale.y / 2) , powerupsPrefabs[powerupIndex].transform.rotation);
+
+        GameObject pooledPowerup = ObjectPooler.SharedInstance.GetPooledObject(powerupsPrefabs[powerupIndex]);
+        if (pooledPowerup != null)
+        {
+            pooledPowerup.SetActive(true); // activate it
+
+            pooledPowerup.transform.position = GenerateSpawnPosition(powerupAndObstacleSpawnRangeX, powerupAndObstacleSpawnRangeZ, powerupsPrefabs[powerupIndex].transform.localScale.y / 2);
+        }
+
         waitingForPowerUp = false;
     }
     private void SpawnEnemyWave(int enemiesToSpawn)
@@ -135,6 +133,7 @@ public class SpawnManager : MonoBehaviour
     private void EnemiesGeneration()
     {
         int enemyIndex = Random.Range(0, enemiesPrefabs.Length);
+        
         GameObject pooledEnemy = ObjectPooler.SharedInstance.GetPooledObject(enemiesPrefabs[enemyIndex]);
         if (pooledEnemy != null)
         {
