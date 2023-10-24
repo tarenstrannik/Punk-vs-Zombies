@@ -29,16 +29,49 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private int minSoftObstacles = 0;
     [SerializeField] private int maxSoftObstacles = 6;
+    public int MaxSoftObstacles
+    {
+        get
+        {
+            return maxSoftObstacles;
+        }
+    }
 
     [SerializeField] private int minHardObstacles = 0;
     [SerializeField] private int maxHardObstacles = 6;
+    public int MaxHardObstacles
+    {
+        get
+        {
+            return MaxHardObstacles;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         planeMeshRenderer = plane.GetComponent<MeshRenderer>();
     }
+    public int MaxObjectCount(GameObject gameObject)
+    {
+        foreach (GameObject gameObj in hardObstaclesPrefabs)
+        {
+            if(gameObj== gameObject)
+            {
+                return maxHardObstacles;
+            }
+        }
 
+        foreach (GameObject gameObj in softObstaclesPrefabs)
+        {
+            if (gameObj == gameObject)
+            {
+                return maxSoftObstacles;
+            }
+        }
+
+        return 0;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -96,8 +129,8 @@ public class SpawnManager : MonoBehaviour
 
     private void GenerateObstacles()
     {
-        int randSoftObstacles = Random.Range(minSoftObstacles, maxSoftObstacles);
-        int randHardObstacles = Random.Range(minHardObstacles, maxHardObstacles);
+        int randSoftObstacles = Random.Range(minSoftObstacles, MaxSoftObstacles);
+        int randHardObstacles = Random.Range(minHardObstacles, MaxHardObstacles);
         for (var i = 0; i < randSoftObstacles; i++)
         {
             ObstaclesGeneration(softObstaclesPrefabs);
