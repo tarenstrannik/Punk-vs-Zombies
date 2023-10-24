@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 80310089511026691}
   - component: {fileID: -496794175325951409}
   m_Layer: 0
-  m_Name: Zombie2
+  m_Name: BigZombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,8 +33,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.8, y: -14.45, z: 2.67}
-  m_LocalScale: {x: 1, y: 3, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 4.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2281640574706233110}
   m_Father: {fileID: 0}
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedSlow: 0.7
   speedNormal: 1
-  speed: 4
+  speed: 3
   rotationSpeed: 20
   gravityCoef: 0.5
   animSpeedCoef: 0.1
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 342956657ab2d604eb8f36d56a173cb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  biteDelay: 1
+  biteDelay: 1.5
   curBitingTimer: 0
 --- !u!114 &-496794175325951409
 MonoBehaviour:
@@ -183,8 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba34a2d840d025b46903e1bb19a8e7f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  personHealth: 3
-  enemyBiteDamage: 1
+  personHealth: 10
+  enemyBiteDamage: 5
   destroyDelay: 1.5
 --- !u!1001 &2281640574706365880
 PrefabInstance:
