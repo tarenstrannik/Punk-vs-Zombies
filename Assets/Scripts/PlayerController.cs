@@ -24,7 +24,7 @@ public class PlayerController : PersonController
 
     private int score = 0;
 
-    private bool isGameOver = false;
+    
     protected override void Awake()
     {
         base.Awake();
@@ -51,7 +51,7 @@ public class PlayerController : PersonController
             playerMove.SendMessage("ConstraintPlayer");
         }
 
-        if (IsDead && !isGameOver)
+        if (IsDead && MainManager.Instance.isGameActive)
         {
             GameOver();
         }
@@ -60,7 +60,7 @@ public class PlayerController : PersonController
     }
     private void GameOver()
     {
-        isGameOver = true;
+        MainManager.Instance.isGameActive = false;
         playerAudioSource.PlayOneShot(deathAudio);
     }
     protected override void ReceiveDamage(float damage)
