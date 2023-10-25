@@ -34,23 +34,24 @@ public class EnemyController : PersonController
     
     [SerializeField] private float destroyDelay = 1.5f;
 
-    private PlayerController playerController;
+    
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        playerController = GetComponent<EnemyMove>().Player.GetComponent<PlayerController>();
+        //playerController = GetComponent<EnemyMove>().Player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
-    protected override void Update()
+    protected override void ReceiveDamage(float damage)
     {
-        if (PersonHealth <= 0 && !IsDead)
+        base.ReceiveDamage(damage);
+        if (IsDead)
         {
             GameManager.Instance.SendMessage("UpdateScore", scoresForEnemy);
             Invoke("DestroyBody", destroyDelay);
         }
-        base.Update();
+        
         
     }
     void DestroyBody()

@@ -17,7 +17,7 @@ public class PersonController : MonoBehaviour
         }
         protected set
         {
-            personHealth = Mathf.Clamp(value, 0f, maxPersonHealth); ;
+            personHealth = Mathf.Clamp(value, -0.5f, maxPersonHealth); ;
         } 
     }
     public bool IsDead { get; protected set; } = false;
@@ -26,6 +26,11 @@ public class PersonController : MonoBehaviour
     protected virtual void ReceiveDamage(float damage)
     {
         PersonHealth -= damage;
+        if (PersonHealth <= 0 && !IsDead)
+        {
+            IsDead = true;
+            moveComponent.DieAnim();
+        }
     }
     protected virtual void Awake()
     {
@@ -37,16 +42,12 @@ public class PersonController : MonoBehaviour
     }
     protected virtual void Update()
     {
-        if (PersonHealth <= 0 && !IsDead)
-        {
-            IsDead = true;
-            moveComponent.DieAnim();
-        }
+       
     }
 
-    public void Revive()
+    public virtual void Revive()
     {
-        personHealth = maxPersonHealth;
+        PersonHealth = maxPersonHealth;
         IsDead = false;
        
     }

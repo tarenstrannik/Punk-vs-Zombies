@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     private bool waitingForPowerUp = false;
 
     public int Score { get; private set; } = 0;
-
+    public PlayerController playerController;
 
     private void Awake()
     {
@@ -28,9 +28,24 @@ public class GameManager : MonoBehaviour
         Instance = this;
         uiDisplay = uiDisplayObject.GetComponent<UIDisplay>();
         Time.timeScale = 1;
+        
     }
     private void Start()
     {
+        
+        if (MainManager.Instance.SavedWave != 1)
+        {
+            MainManager.Instance.CurWave = MainManager.Instance.SavedWave;
+            playerController.SendMessage("resetHealthToValue", MainManager.Instance.SavedPlayerHealth);
+            Score = MainManager.Instance.SavedPlayerScore;
+            uiDisplay.SendMessage("UpdateScore", MainManager.Instance.SavedPlayerScore);
+        }
+        else
+        {
+            int zeroScore = 0;
+            uiDisplay.SendMessage("UpdateScore", zeroScore);
+            // MainManager.Instance.CurWave = 1;
+        }
         waitingForPowerUp = true;
         SpawnManager.Instance.InitPowerupGeneration();
        
@@ -39,7 +54,7 @@ public class GameManager : MonoBehaviour
     public void CheckEnemiesLeft()
     {
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        if (enemyCount == 0)
+        if (enemyCount == 0 && MainManager.Instance.isGameActive)
         {
             EndRound();
 
@@ -73,8 +88,9 @@ public class GameManager : MonoBehaviour
         if (MainManager.Instance.CurWave > MainManager.Instance.MaxWave)
         {
             MainManager.Instance.SetMaxWave(MainManager.Instance.CurWave);
-            MainManager.Instance.SavePlayerData();
         }
+        MainManager.Instance.SavePlayerData();
+        
         StartRound();
     }
 
@@ -98,4 +114,9 @@ public class GameManager : MonoBehaviour
         Score += addScore;
         uiDisplay.SendMessage("UpdateScore", Score);
     }
+    private void ResetScore()
+    {
+        Score = 0;
+    }
+       
 }

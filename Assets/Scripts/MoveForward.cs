@@ -9,11 +9,17 @@ public class MoveForward : MonoBehaviour
     [SerializeField] private float rangeX = 20f;
     [SerializeField] private float rangeZ = 20f;
     // Start is called before the first frame update
-    void Start()
-    {
-        bulletRb=GetComponent<Rigidbody>(); 
-    }
 
+    private void Awake()
+    {
+        bulletRb = GetComponent<Rigidbody>();
+    }
+    private void OnEnable()
+    {
+        
+        bulletRb.velocity = Vector3.zero;
+        bulletRb.angularVelocity = Vector3.zero;
+    }
     // Update is called once per frame
     void Update()
     {

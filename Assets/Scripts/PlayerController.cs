@@ -27,7 +27,7 @@ public class PlayerController : PersonController
     protected override void Awake()
     {
         base.Awake();
-        
+       
     }
     protected override void Start()
     {
@@ -37,6 +37,8 @@ public class PlayerController : PersonController
         ObjectPooler.SharedInstance.PushObjectToPool(bulletPrefab, 0);
         uiDisplay= uiDisplayObject.GetComponent<UIDisplay>();
         uiDisplay.SendMessage("UpdateHealth", Mathf.Ceil(PersonHealth));
+        MainManager.Instance.playerController = this;
+        GameManager.Instance.playerController = this;
     }
 
     // Update is called once per frame
@@ -50,15 +52,22 @@ public class PlayerController : PersonController
             playerMove.SendMessage("ConstraintPlayer");
         }
 
-        if (IsDead && MainManager.Instance.isGameActive)
-        {
-            playerAudioSource.PlayOneShot(deathAudio);
-            GameManager.Instance.GameOver();
-        }
+        
 
 
     }
+    private void resetHealthToValue(float value)
+    {
+        PersonHealth = value;
+        uiDisplay.SendMessage("UpdateHealth", Mathf.Ceil(PersonHealth));
+    }
 
+    public override void Revive()
+    {
+        base.Revive();
+        uiDisplay.SendMessage("UpdateHealth", Mathf.Ceil(PersonHealth));
+
+    }
     protected override void ReceiveDamage(float damage)
     {
         float prevHealth = PersonHealth;
@@ -73,8 +82,13 @@ public class PlayerController : PersonController
             {
                 playerAudioSource.PlayOneShot(healingAudio);
             }
-            if((int)prevHealth!=(int)PersonHealth)
+            if(Mathf.Ceil(prevHealth) != Mathf.Ceil(PersonHealth))
             uiDisplay.SendMessage("UpdateHealth", Mathf.Ceil(PersonHealth));
+        }
+        else if (IsDead && MainManager.Instance.isGameActive)
+        {
+            playerAudioSource.PlayOneShot(deathAudio);
+            GameManager.Instance.GameOver();
         }
     }
     private void PlayerShoot()
@@ -87,7 +101,7 @@ public class PlayerController : PersonController
             if (pooledBullet != null)
             {
                 pooledBullet.SetActive(true); // activate it
-
+                
                 pooledBullet.transform.position = shootingPoint.transform.position;
                 pooledBullet.transform.rotation = shootingPoint.transform.rotation;
             }

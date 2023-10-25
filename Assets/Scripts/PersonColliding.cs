@@ -14,11 +14,7 @@ public class PersonColliding : MonoBehaviour
         //Debug.Log(personController);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Obstacle"))

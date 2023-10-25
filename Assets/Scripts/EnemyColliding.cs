@@ -7,7 +7,7 @@ public class EnemyColliding : PersonColliding
     // Start is called before the first frame update
 
     private EnemyController enemyController;
-    private EnemyMove enemyMove;
+
  
 
     public float biteDelay = 1f;
@@ -16,7 +16,7 @@ public class EnemyColliding : PersonColliding
     {
         base.Start();
         enemyController=GetComponent<EnemyController>();
-        enemyMove=GetComponent<EnemyMove>();
+
     }
 
 

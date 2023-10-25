@@ -15,9 +15,6 @@ public class UIInGame : UIDisplay
     protected override void Start()
     {
         base.Start();
-        if (scoreText != null)
-            UpdateScore(0);
-
     }
 
     // Update is called once per frame
@@ -66,5 +63,9 @@ public class UIInGame : UIDisplay
         curMenu = bestscoreScreen;
         prevMenu = gameoverScreen;
     }
-
+    public void SetPlayerResult()
+    {
+        MainManager.Instance.SetCurPlayerScore();
+        MainManager.Instance.SavePlayerData();
+    }
 }

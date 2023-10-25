@@ -17,6 +17,10 @@ public class MainManager : MonoBehaviour
     public static MainManager Instance { get; private set; }
 
 
+    public int SavedWave { get; private set; }
+    public float SavedPlayerHealth { get; private set; }
+    public int SavedPlayerScore { get; private set; }
+
     private List<BestRecord> curBestRecords;
     [SerializeField] private int maxBestListCount = 10;
 
@@ -24,6 +28,8 @@ public class MainManager : MonoBehaviour
 
     [SerializeField] private SceneAsset gameSceneAsset;
     public SceneAsset GameSceneAsset { get { return gameSceneAsset; } }
+
+    public PlayerController playerController;
 
     private void Awake()
     {
@@ -86,14 +92,18 @@ public class MainManager : MonoBehaviour
     public void SetCurPlayerScore()
     {
         CurPlayer = tempCurPlayer;
-        UpdateBestList(GameManager.Instance.Score, tempCurPlayer);
+        UpdateBestList(GameManager.Instance.Score, CurPlayer);
     }
 
     public void SavePlayerData()
     {
-        GameParam curWaveParam = new GameParam
+        SavedPlayerScore = GameManager.Instance.Score;
+        SavedWave = CurWave;
+        SavedPlayerHealth = playerController.PersonHealth;
+        //Debug.Log(SavedWave + " " + CurWave + " " + SavedPlayerScore + " " + SavedPlayerHealth);
+        GameParam savedWaveParam = new GameParam
         {
-            paramName = "curWave",
+            paramName = "savedWave",
             paramType = paramTypes.Int,
             paramIntValue = CurWave
 
@@ -105,7 +115,24 @@ public class MainManager : MonoBehaviour
             paramIntValue = MaxWave
 
         };
-        SaveData data = new SaveData
+
+        GameParam playerHealth = new GameParam
+        {
+            paramName = "playerHealth",
+            paramType = paramTypes.Float,
+            paramFloatValue = playerController.PersonHealth
+
+        };
+
+            GameParam playerScore = new GameParam
+            {
+                paramName = "playerScore",
+                paramType = paramTypes.Int,
+                paramIntValue = GameManager.Instance.Score
+
+        };
+
+SaveData data = new SaveData
         {
             playerName = CurPlayer,
             records = new BestRecordList
@@ -116,8 +143,10 @@ public class MainManager : MonoBehaviour
             {
                 gameParam = new List<GameParam>
                 {
-                    curWaveParam,
-                    maxWaveParam
+                    savedWaveParam,
+                    maxWaveParam,
+                    playerHealth,
+                    playerScore
                 }
             }
         };
@@ -127,10 +156,7 @@ public class MainManager : MonoBehaviour
 
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
     }
-    public void SetCurWave(int wave)
-    {
-        CurWave = wave;
-    }
+
 
     public int GetBestScore()
     {
@@ -150,7 +176,6 @@ public class MainManager : MonoBehaviour
     {
         BestRecord record = new BestRecord();
         record.playerName = playerName;
-        CurPlayer = playerName;
         record.playerScore = score;
         curBestRecords.Insert(0, record);
         if (curBestRecords.Count > maxBestListCount)
@@ -168,61 +193,117 @@ public class MainManager : MonoBehaviour
         {
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
-            if (data.playerName != null)
-                CurPlayer = data.playerName;
-            else CurPlayer = "";
-            if (data.records != null)
-                curBestRecords = data.records.bestRecordList;
-            else curBestRecords = new List<BestRecord> { };
-
-            if (data.gameParams != null && data.gameParams.gameParam != null)
+            if (data != null)
             {
-                GameParam targetGameParamCurWave = data.gameParams.gameParam.FirstOrDefault(param => param.paramName == "curWave");
-
-                // Проверяем, был ли найден объект GameParam с заданным paramName
-                if (targetGameParamCurWave != null)
+                if (data.playerName != null)
                 {
-                    CurWave = targetGameParamCurWave.paramIntValue;
-
-
-                    // Делаем с объектом GameParam то, что вам нужно
+                    CurPlayer = data.playerName;
                 }
                 else
                 {
-                    CurWave = 1;
+                    CurPlayer = "";
                 }
-                GameParam targetGameParamMaxWave = data.gameParams.gameParam.FirstOrDefault(param => param.paramName == "maxWave");
-
-                // Проверяем, был ли найден объект GameParam с заданным paramName
-                if (targetGameParamMaxWave != null)
+                if (data.records != null)
                 {
-                    MaxWave = targetGameParamMaxWave.paramIntValue;
-
-
-                    // Делаем с объектом GameParam то, что вам нужно
+                    curBestRecords = data.records.bestRecordList;
                 }
                 else
                 {
-                    MaxWave = 1;
+                    curBestRecords = new List<BestRecord> { };
+                }
+
+                if (data.gameParams != null && data.gameParams.gameParam != null)
+                {
+                    GameParam targetGameParamSavedWave = data.gameParams.gameParam.FirstOrDefault(param => param.paramName == "savedWave");
+
+                    // Проверяем, был ли найден объект GameParam с заданным paramName
+                    if (targetGameParamSavedWave != null)
+                    {
+                        SavedWave = targetGameParamSavedWave.paramIntValue;
+
+
+                        // Делаем с объектом GameParam то, что вам нужно
+                    }
+                    else
+                    {
+                        SavedWave = 1;
+                    }
+                    GameParam targetGameParamMaxWave = data.gameParams.gameParam.FirstOrDefault(param => param.paramName == "maxWave");
+
+                    // Проверяем, был ли найден объект GameParam с заданным paramName
+                    if (targetGameParamMaxWave != null)
+                    {
+                        MaxWave = targetGameParamMaxWave.paramIntValue;
+
+
+                        // Делаем с объектом GameParam то, что вам нужно
+                    }
+                    else
+                    {
+                        MaxWave = 1;
+                    }
+
+                    GameParam targetPlayerHealth = data.gameParams.gameParam.FirstOrDefault(param => param.paramName == "playerHealth");
+
+                    // Проверяем, был ли найден объект GameParam с заданным paramName
+                    if (targetPlayerHealth != null)
+                    {
+
+                        SavedPlayerHealth = targetPlayerHealth.paramFloatValue;
+                        // Делаем с объектом GameParam то, что вам нужно
+                    }
+                    else
+                    {
+                        SavedPlayerHealth = 0;
+                    }
+
+                    GameParam targetScoreValue = data.gameParams.gameParam.FirstOrDefault(param => param.paramName == "playerScore");
+
+                    // Проверяем, был ли найден объект GameParam с заданным paramName
+                    if (targetScoreValue != null)
+                    {
+                        SavedPlayerScore = targetScoreValue.paramIntValue;
+                        // Делаем с объектом GameParam то, что вам нужно
+                    }
+                    else
+                    {
+                        SavedPlayerScore = 0;
+                    }
+
+
+                }
+                else
+                {
+                    SetDefaultParams();
                 }
             }
             else
             {
-                CurWave = 1;
-                MaxWave = 1;
+                SetDefaultParams();
+                SetDefaultPlayerParams();
             }
-
-
         }
         else
         {
-            CurWave = 1;
-            MaxWave = 1;
-            curBestRecords = new List<BestRecord> { };
-            CurPlayer = "";
+            SetDefaultParams();
+            SetDefaultPlayerParams();
         }
     }
 
+    private void SetDefaultParams()
+    {
+        SavedWave = 1;
+        CurWave = 1;
+        MaxWave = 1;
+        SavedPlayerHealth = 0;
+        SavedPlayerScore = 0;
+        
+    }
+    private void SetDefaultPlayerParams()
+    {
+        curBestRecords = new List<BestRecord> { };
+        CurPlayer = "";
+    }
 
     public void SetMaxWave(int maxWave)
     {
