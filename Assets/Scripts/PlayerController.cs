@@ -22,8 +22,7 @@ public class PlayerController : PersonController
     private UIDisplay uiDisplay;
     private PlayerMove playerMove;
 
-    private int score = 0;
-
+    
     
     protected override void Awake()
     {
@@ -37,7 +36,7 @@ public class PlayerController : PersonController
         playerMove = GetComponent<PlayerMove>();
         ObjectPooler.SharedInstance.PushObjectToPool(bulletPrefab, 0);
         uiDisplay= uiDisplayObject.GetComponent<UIDisplay>();
-        uiDisplay.SendMessage("UpdateHealth", (int)PersonHealth);
+        uiDisplay.SendMessage("UpdateHealth", Mathf.Ceil(PersonHealth));
     }
 
     // Update is called once per frame
@@ -53,16 +52,13 @@ public class PlayerController : PersonController
 
         if (IsDead && MainManager.Instance.isGameActive)
         {
-            GameOver();
+            playerAudioSource.PlayOneShot(deathAudio);
+            GameManager.Instance.GameOver();
         }
 
 
     }
-    private void GameOver()
-    {
-        MainManager.Instance.isGameActive = false;
-        playerAudioSource.PlayOneShot(deathAudio);
-    }
+
     protected override void ReceiveDamage(float damage)
     {
         float prevHealth = PersonHealth;
@@ -78,7 +74,7 @@ public class PlayerController : PersonController
                 playerAudioSource.PlayOneShot(healingAudio);
             }
             if((int)prevHealth!=(int)PersonHealth)
-            uiDisplay.SendMessage("UpdateHealth", (int)PersonHealth);
+            uiDisplay.SendMessage("UpdateHealth", Mathf.Ceil(PersonHealth));
         }
     }
     private void PlayerShoot()
@@ -98,11 +94,7 @@ public class PlayerController : PersonController
            
         }
     }
-    private void UpdateScore(int addScore)
-    {
-        score += addScore;
-        uiDisplay.SendMessage("UpdateScore", score);
-    }
+
 
 
 

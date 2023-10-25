@@ -47,7 +47,7 @@ public class EnemyController : PersonController
     {
         if (PersonHealth <= 0 && !IsDead)
         {
-            playerController.SendMessage("UpdateScore", scoresForEnemy);
+            GameManager.Instance.SendMessage("UpdateScore", scoresForEnemy);
             Invoke("DestroyBody", destroyDelay);
         }
         base.Update();
@@ -56,7 +56,7 @@ public class EnemyController : PersonController
     void DestroyBody()
     {
         gameObject.SetActive(false);
-       
+        GameManager.Instance.CheckEnemiesLeft();
     }
 
 }

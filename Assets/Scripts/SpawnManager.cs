@@ -24,13 +24,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float enemySpawnRangeX = 16;
     [SerializeField] private float enemySpawnRangeZ = 10;
 
-    private int enemyCount = 0;
-
-    private int powerupCount = 0;
+    
     [SerializeField] private int maxPowerupCount = 1;
-    private int waveNumber = 0;
 
-    private bool waitingForPowerUp = false;
+
+    
 
     [SerializeField] private int minSoftObstacles = 0;
     [SerializeField] private int maxSoftObstacles = 6;
@@ -40,14 +38,19 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int maxHardObstacles = 6;
 
 
-    private bool isStarted = false;
+   
     // Start is called before the first frame update
 
+    public static SpawnManager Instance { get; private set; }
     private void Awake()
     {
-        
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
     }
-
     void Start()
     {
         planeMeshRenderer = plane.GetComponent<MeshRenderer>();
@@ -67,47 +70,25 @@ public class SpawnManager : MonoBehaviour
         {
             ObjectPooler.SharedInstance.PushObjectToPool(gameObj, maxPowerupCount);
         }
-        StartRound();
-
+        MainManager.Instance.isGameActive =true;
+        GameManager.Instance.SendMessage("StartRound");
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (isStarted)
-        { 
-            enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-            if (enemyCount == 0)
-            {
-                StartRound();
-            }
-            powerupCount = GameObject.FindGameObjectsWithTag("Powerup").Length;
-            if (powerupCount == 0 && !waitingForPowerUp)
-            {
-                waitingForPowerUp = true;
-                float powerupTimeout = Random.Range(powerupSpawnDelayMin, powerupSpawnDelayMax);
-                Invoke("PowerupGeneration", powerupTimeout);
-            }
-        }
-    }
-    private void StartRound()
-    {
-        //Debug.Log("S" + Time.time);
-        isStarted = true;
-        waveNumber++;
-
-        SpawnEnemyWave(waveNumber);
-        DestroyObstacles();
-        GenerateObstacles();
-        GenerateBackground();
-    }
 
 
 
-    private void GenerateBackground()
+
+    public void GenerateBackground()
     {
         int indexBG = Random.Range(0, backgroundTextures.Count);
         planeMeshRenderer.material = backgroundTextures[indexBG];
+    }
+
+    public void InitPowerupGeneration()
+    {
+        float powerupTimeout = Random.Range(powerupSpawnDelayMin, powerupSpawnDelayMax);
+        Invoke("PowerupGeneration", powerupTimeout);
     }
     private void PowerupGeneration()
     {
@@ -120,10 +101,10 @@ public class SpawnManager : MonoBehaviour
 
             pooledPowerup.transform.position = GenerateSpawnPosition(powerupAndObstacleSpawnRangeX, powerupAndObstacleSpawnRangeZ, powerupsPrefabs[powerupIndex].transform.localScale.y / 2);
         }
-
-        waitingForPowerUp = false;
+        GameManager.Instance.SetPowerupWaiting(false);
+        
     }
-    private void SpawnEnemyWave(int enemiesToSpawn)
+    public void SpawnEnemyWave(int enemiesToSpawn)
     {
         for (var i = 0; i < enemiesToSpawn; i++)
         {
@@ -143,7 +124,7 @@ public class SpawnManager : MonoBehaviour
         }
 
     }
-    private void DestroyObstacles()
+    public void DestroyObstacles()
     {
         GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         foreach( GameObject obstacle in obstacles)
@@ -152,7 +133,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    private void GenerateObstacles()
+    public void GenerateObstacles()
     {
         int randSoftObstacles = Random.Range(minSoftObstacles, maxSoftObstacles);
         int randHardObstacles = Random.Range(minHardObstacles, maxHardObstacles);

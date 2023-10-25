@@ -8,17 +8,7 @@ public class PlayerMove : MoveComponent
     [SerializeField] private Vector3 bottomLeft;
     [SerializeField] private Vector3 topRight;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void PlayerMovement()
     {

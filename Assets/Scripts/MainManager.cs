@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Linq;
+using UnityEditor;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class MainManager : MonoBehaviour
 {
 
-    public int CurWave { get; private set; }
-    public string CurPLayer { get; private set; }
+    public int CurWave { get; set; }
+    public int MaxWave { get; private set; }
+    public string CurPlayer { get; private set; }
+
+    private string tempCurPlayer;
     public static MainManager Instance { get; private set; }
 
 
@@ -16,6 +21,9 @@ public class MainManager : MonoBehaviour
     [SerializeField] private int maxBestListCount = 10;
 
     public bool isGameActive = false;
+
+    [SerializeField] private SceneAsset gameSceneAsset;
+    public SceneAsset GameSceneAsset { get { return gameSceneAsset; } }
 
     private void Awake()
     {
@@ -27,7 +35,7 @@ public class MainManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-   
+        LoadPlayerData();
     }
     [System.Serializable]
     class SaveData
@@ -71,18 +79,35 @@ public class MainManager : MonoBehaviour
         public List<BestRecord> bestRecordList;
     }
 
+    public void TempCurPlayerSet(string value)
+    {
+        tempCurPlayer = value;
+    }
+    public void SetCurPlayerScore()
+    {
+        CurPlayer = tempCurPlayer;
+        UpdateBestList(GameManager.Instance.Score, tempCurPlayer);
+    }
+
     public void SavePlayerData()
     {
-        GameParam waveParam = new GameParam
+        GameParam curWaveParam = new GameParam
         {
-            paramName = "maxWave",
+            paramName = "curWave",
             paramType = paramTypes.Int,
             paramIntValue = CurWave
 
         };
+        GameParam maxWaveParam = new GameParam
+        {
+            paramName = "maxWave",
+            paramType = paramTypes.Int,
+            paramIntValue = MaxWave
+
+        };
         SaveData data = new SaveData
         {
-            playerName = CurPLayer,
+            playerName = CurPlayer,
             records = new BestRecordList
             {
                 bestRecordList = curBestRecords
@@ -91,7 +116,8 @@ public class MainManager : MonoBehaviour
             {
                 gameParam = new List<GameParam>
                 {
-                    waveParam
+                    curWaveParam,
+                    maxWaveParam
                 }
             }
         };
@@ -124,7 +150,7 @@ public class MainManager : MonoBehaviour
     {
         BestRecord record = new BestRecord();
         record.playerName = playerName;
-        CurPLayer = playerName;
+        CurPlayer = playerName;
         record.playerScore = score;
         curBestRecords.Insert(0, record);
         if (curBestRecords.Count > maxBestListCount)
@@ -143,20 +169,20 @@ public class MainManager : MonoBehaviour
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
             if (data.playerName != null)
-                CurPLayer = data.playerName;
-            else CurPLayer = "";
+                CurPlayer = data.playerName;
+            else CurPlayer = "";
             if (data.records != null)
                 curBestRecords = data.records.bestRecordList;
             else curBestRecords = new List<BestRecord> { };
 
             if (data.gameParams != null && data.gameParams.gameParam != null)
             {
-                GameParam targetGameParam = data.gameParams.gameParam.FirstOrDefault(param => param.paramName == "speed");
+                GameParam targetGameParamCurWave = data.gameParams.gameParam.FirstOrDefault(param => param.paramName == "curWave");
 
                 // Проверяем, был ли найден объект GameParam с заданным paramName
-                if (targetGameParam != null)
+                if (targetGameParamCurWave != null)
                 {
-                    CurWave = targetGameParam.paramIntValue;
+                    CurWave = targetGameParamCurWave.paramIntValue;
 
 
                     // Делаем с объектом GameParam то, что вам нужно
@@ -165,14 +191,41 @@ public class MainManager : MonoBehaviour
                 {
                     CurWave = 1;
                 }
+                GameParam targetGameParamMaxWave = data.gameParams.gameParam.FirstOrDefault(param => param.paramName == "maxWave");
+
+                // Проверяем, был ли найден объект GameParam с заданным paramName
+                if (targetGameParamMaxWave != null)
+                {
+                    MaxWave = targetGameParamMaxWave.paramIntValue;
+
+
+                    // Делаем с объектом GameParam то, что вам нужно
+                }
+                else
+                {
+                    MaxWave = 1;
+                }
             }
             else
             {
                 CurWave = 1;
+                MaxWave = 1;
             }
 
 
         }
+        else
+        {
+            CurWave = 1;
+            MaxWave = 1;
+            curBestRecords = new List<BestRecord> { };
+            CurPlayer = "";
+        }
     }
 
+
+    public void SetMaxWave(int maxWave)
+    {
+        MaxWave = maxWave;
+    }
 }

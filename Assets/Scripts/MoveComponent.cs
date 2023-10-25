@@ -23,11 +23,6 @@ public class MoveComponent : MonoBehaviour
         personRb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void SlowDown()
     {
