@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18386586, g: 0.2287033, b: 0.3013167, a: 1}
+  m_IndirectSpecularColor: {r: 0.18386507, g: 0.22870167, b: 0.30131665, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2880,13 +2880,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.23271516, y: -0.25119516, z: 0.06235583, w: 0.93747336}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.24092261, y: 0, z: 0, w: 0.97054434}
+  m_LocalPosition: {x: -1.49, y: 8.62, z: 2.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 27.882, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 27.882, y: 0, z: 0}
 --- !u!1 &745171526
 GameObject:
   m_ObjectHideFlags: 0
@@ -9041,11 +9041,22 @@ MonoBehaviour:
   hardObstaclesPrefabs:
   - {fileID: 3146325358429107585, guid: 896474ce81fe45f46bafed968e2f570d, type: 3}
   - {fileID: 4189624109047876086, guid: 84113ff88ef5ec14ebbd38772788c8ea, type: 3}
+  - {fileID: 5935596174579108994, guid: 86d3b54639500ff4aac0a5ef0374d2c0, type: 3}
+  - {fileID: 8770911033935543997, guid: d9f3ecf9e9babf84a87119ad89fdef3e, type: 3}
+  - {fileID: 8202926782612950349, guid: 240720a80aa07f14daa98fdab958f8b6, type: 3}
+  - {fileID: 539814186797758080, guid: 2d14bfb2bc1248940bdad1056e46a7f2, type: 3}
+  - {fileID: 8809380876241890793, guid: b6ce90aad1a217e429b0ca70fcb3353e, type: 3}
+  - {fileID: 5093720399512463756, guid: 2aec3db8e40e0274bb91f8430537ac1b, type: 3}
+  - {fileID: 3719099506355126927, guid: 5ec25f26a0a34cb43841213c82ce8364, type: 3}
   softObstaclesPrefabs:
-  - {fileID: 3789584837261770411, guid: a434e46a2bd2a3742ae9ebff082e3808, type: 3}
-  - {fileID: 2595898624114666197, guid: 1d9b88c26dee3d94883d749507bef10e, type: 3}
-  - {fileID: 4858208688131828250, guid: 90bf81afdf6d2e149bc482b67cd2df71, type: 3}
-  - {fileID: 6017336237980762606, guid: 1d449d2bdb44c2f4a9cd3793df20374a, type: 3}
+  - {fileID: 5785361843181513989, guid: a9e991f230227f04f938c63d9d416f90, type: 3}
+  - {fileID: 6490683425873849451, guid: 90855642b16dd4346acdbccedcdc104c, type: 3}
+  - {fileID: 6656299760051622045, guid: 2cf64e078d593ed4aa192d8fe8ca6319, type: 3}
+  - {fileID: 3784959382136415466, guid: c094c6249e2f6844186256d71b2077db, type: 3}
+  - {fileID: 355985546289167853, guid: 288ad789e5ba37a4b91e7226a7a923ad, type: 3}
+  - {fileID: 8756268655033109856, guid: e802019fa87c8ef44ae8903c155282a7, type: 3}
+  - {fileID: 2196214118960619283, guid: a9daedbfc7d5d414aa7ae343c4ca6f28, type: 3}
+  - {fileID: 606895689235188532, guid: ce3cf0e0fd80cb44caea393fff4de536, type: 3}
   enemiesPrefabs:
   - {fileID: 6531366760050254064, guid: 1565e3de68450cd4f8fd898e6b4e0216, type: 3}
   - {fileID: 3174863941775962749, guid: d1cd7bd5339d3a244aac2027d8f7370f, type: 3}
