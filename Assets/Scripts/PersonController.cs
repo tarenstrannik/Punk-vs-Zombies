@@ -17,7 +17,7 @@ public class PersonController : MonoBehaviour
         }
         protected set
         {
-            personHealth = Mathf.Clamp(value, -0.5f, maxPersonHealth); ;
+            personHealth = Mathf.Clamp(value, 0f, maxPersonHealth); ;
         } 
     }
     public bool IsDead { get; protected set; } = false;

@@ -72,6 +72,8 @@ public class PlayerController : PersonController
     {
         float prevHealth = PersonHealth;
         base.ReceiveDamage(damage);
+        if (Mathf.Ceil(prevHealth) != Mathf.Ceil(PersonHealth))
+            uiDisplay.SendMessage("UpdateHealth", Mathf.Ceil(PersonHealth));
         if (!IsDead)
         {
             if (damage > 0)
@@ -82,8 +84,7 @@ public class PlayerController : PersonController
             {
                 playerAudioSource.PlayOneShot(healingAudio);
             }
-            if(Mathf.Ceil(prevHealth) != Mathf.Ceil(PersonHealth))
-            uiDisplay.SendMessage("UpdateHealth", Mathf.Ceil(PersonHealth));
+            
         }
         else if (IsDead && MainManager.Instance.isGameActive)
         {
