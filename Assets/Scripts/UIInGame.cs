@@ -16,6 +16,8 @@ public class UIInGame : UIDisplay
     [SerializeField] private TextMeshProUGUI waveNumberCountdownText;
     [SerializeField] private float countdownTimer = 1f;
     private bool isCountdown=false;
+
+    private Coroutine countdownCoroutine;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -54,7 +56,8 @@ public class UIInGame : UIDisplay
         }
         else if (target == null && MainManager.Instance.isGameActive && (curMenu == null || curMenu == pauseScreen) && isCountdown)
         {
-            StopCoroutine(WaveStartBackCount());
+            StopCoroutine(countdownCoroutine);
+
             waveNumberCountdownPanel.SetActive(false);
             Time.timeScale = 1f;
             isCountdown = false;
@@ -82,8 +85,8 @@ public class UIInGame : UIDisplay
     }
     private void Countdown()
     {
-        
-        StartCoroutine(WaveStartBackCount());
+
+        countdownCoroutine= StartCoroutine(WaveStartBackCount());
     }
     IEnumerator WaveStartBackCount()
     {

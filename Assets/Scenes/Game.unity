@@ -4411,13 +4411,13 @@ MonoBehaviour:
       - m_Target: {fileID: 1358776786}
         m_TargetAssemblyTypeName: UIDisplay, Assembly-CSharp
         m_MethodName: LoadScene
-        m_Mode: 2
+        m_Mode: 5
         m_Arguments:
-          m_ObjectArgument: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEditor.SceneAsset, UnityEditor.CoreModule
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Game
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1054006621
@@ -5328,6 +5328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiDisplayObject: {fileID: 1358776784}
   playerController: {fileID: 0}
+  beforeNewRoundDelay: 1
 --- !u!4 &1158021489
 Transform:
   m_ObjectHideFlags: 0
@@ -7728,13 +7729,13 @@ MonoBehaviour:
       - m_Target: {fileID: 1358776786}
         m_TargetAssemblyTypeName: UIDisplay, Assembly-CSharp
         m_MethodName: LoadScene
-        m_Mode: 2
+        m_Mode: 5
         m_Arguments:
-          m_ObjectArgument: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEditor.SceneAsset, UnityEditor.CoreModule
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Game
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1564882889
@@ -9287,7 +9288,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9fcd8ff220cdf64459cb263d7d1f938f, type: 2}
+  - {fileID: 2100000, guid: 6551f34d981ad16459c3b98d26434264, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

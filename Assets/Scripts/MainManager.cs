@@ -25,8 +25,8 @@ public class MainManager : MonoBehaviour
 
     public bool isGameActive = false;
 
-    [SerializeField] private SceneAsset gameSceneAsset;
-    public SceneAsset GameSceneAsset { get { return gameSceneAsset; } }
+    [SerializeField] private string gameSceneName;
+    public string GameSceneName { get { return gameSceneName; } }
 
     public PlayerController playerController;
 

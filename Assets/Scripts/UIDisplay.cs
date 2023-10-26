@@ -65,8 +65,13 @@ public class UIDisplay : MonoBehaviour
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.ExitPlaymode();
+
+#else
+#if UNITY_WEBGL
+        SceneManager.LoadScene(0);
 #else
         Application.Quit();
+#endif
 #endif
     }
 
@@ -98,16 +103,17 @@ public class UIDisplay : MonoBehaviour
         }
     }
 
-    public void LoadScene(SceneAsset scene)
+    public void LoadScene(string sceneName)
     {
-        SceneManager.LoadScene(scene.name);
+        SceneManager.LoadScene(sceneName);
     }
+
 
     public void OpenNewGameMenu(UnityEngine.Object obj)
     {
         if (MainManager.Instance.MaxWave == 1)
         {
-            SceneManager.LoadScene(MainManager.Instance.GameSceneAsset.name);
+            SceneManager.LoadScene(MainManager.Instance.GameSceneName);
         }
         else
         {
