@@ -9079,6 +9079,7 @@ MonoBehaviour:
   maxSoftObstacles: 6
   minHardObstacles: 0
   maxHardObstacles: 6
+  directionalLight: {fileID: 705507993}
 --- !u!114 &1952434199
 MonoBehaviour:
   m_ObjectHideFlags: 0

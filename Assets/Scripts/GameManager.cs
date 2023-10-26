@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
         SpawnManager.Instance.DestroyObstacles();
         SpawnManager.Instance.GenerateObstacles();
         SpawnManager.Instance.GenerateBackground();
+        SpawnManager.Instance.WeatherGeneration();
         uiDisplay.SendMessage("Countdown");
     }
     private void EndRound()

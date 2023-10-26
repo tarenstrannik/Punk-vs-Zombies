@@ -7,7 +7,7 @@ public class PersonColliding : MonoBehaviour
     protected MoveComponent moveComponent;
     protected PersonController personController;
     // Start is called before the first frame update
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         moveComponent=GetComponent<MoveComponent>();
         personController = GetComponent<PersonController>();

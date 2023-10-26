@@ -6,10 +6,10 @@ public class PlayerColliding : PersonColliding
 {
     private PlayerController playerController;
     // Start is called before the first frame update
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
-        playerController=GetComponent<PlayerController>();
+        base.Awake();
+        //playerController=GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -24,7 +24,7 @@ public class PlayerColliding : PersonColliding
         if (other.gameObject.CompareTag("Powerup"))
         {
             other.gameObject.SetActive(false);
-            playerController.SendMessage("ReceiveDamage", -other.gameObject.GetComponent<PowerupController>().powerupStrength);
+            personController.SendMessage("ReceiveDamage", -other.gameObject.GetComponent<PowerupController>().powerupStrength);
             //player recieved powerup
         }
        

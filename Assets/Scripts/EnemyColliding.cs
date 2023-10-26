@@ -12,9 +12,9 @@ public class EnemyColliding : PersonColliding
 
     public float biteDelay = 1f;
     public float curBitingTimer = 0f;
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         enemyController=GetComponent<EnemyController>();
 
     }
@@ -24,7 +24,7 @@ public class EnemyColliding : PersonColliding
     protected override void OnCollisionEnter(Collision collision)
     {
         base.OnCollisionEnter(collision);
-        if(collision.gameObject.CompareTag("Player") && !enemyController.IsDead)
+        if(collision.gameObject.CompareTag("Player") && !personController.IsDead)
         {
             Bite(collision.gameObject);
         }
@@ -33,13 +33,13 @@ public class EnemyColliding : PersonColliding
     {
         //Bite player
         biteTarget.SendMessage("ReceiveDamage", enemyController.EnemyBiteDamage);
-        enemyController.SendMessage("ReceiveDamage", -enemyController.EnemyBiteHeal);
+        personController.SendMessage("ReceiveDamage", -enemyController.EnemyBiteHeal);
         curBitingTimer = biteDelay;
     }
     private void OnCollisionStay(Collision collision)
     {
 
-        if (collision.gameObject.CompareTag("Player") && !enemyController.IsDead)
+        if (collision.gameObject.CompareTag("Player") && !personController.IsDead)
         {
             curBitingTimer -= Time.deltaTime;
             if (curBitingTimer <= 0)

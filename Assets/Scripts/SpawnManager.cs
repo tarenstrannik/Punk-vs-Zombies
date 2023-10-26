@@ -37,7 +37,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int minHardObstacles = 0;
     [SerializeField] private int maxHardObstacles = 6;
 
-
+    [SerializeField] private GameObject directionalLight;
    
     // Start is called before the first frame update
 
@@ -123,6 +123,11 @@ public class SpawnManager : MonoBehaviour
             pooledEnemy.transform.position = GenerateSpawnPosition(enemySpawnRangeX, enemySpawnRangeZ, enemiesPrefabs[enemyIndex].transform.localScale.y / 2);
         }
 
+    }
+    public void WeatherGeneration()
+    {
+        float randYRot = Random.Range(0, 360);
+        directionalLight.transform.Rotate(Vector3.up, randYRot, Space.World);
     }
     public void DestroyObstacles()
     {
