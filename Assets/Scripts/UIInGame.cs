@@ -11,6 +11,11 @@ public class UIInGame : UIDisplay
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject gameoverScreen;
     [SerializeField] private GameObject bestscoreScreen;
+
+    [SerializeField] private GameObject waveNumberCountdownPanel;
+    [SerializeField] private TextMeshProUGUI waveNumberCountdownText;
+    [SerializeField] private float countdownTimer = 1f;
+    private bool isCountdown=false;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -40,15 +45,22 @@ public class UIInGame : UIDisplay
     {
              
         GameObject target = obj as GameObject;
-        if (target == null && MainManager.Instance.isGameActive && (curMenu==null || curMenu== pauseScreen))
+        if (target == null && MainManager.Instance.isGameActive && (curMenu==null || curMenu== pauseScreen) &&!isCountdown)
         {
             
             Time.timeScale = Time.timeScale == 1f ? 0f : 1f;
             pauseScreen.SetActive(!pauseScreen.activeSelf);
             curMenu = pauseScreen.activeSelf==true ? pauseScreen : null;
         }
+        else if (target == null && MainManager.Instance.isGameActive && (curMenu == null || curMenu == pauseScreen) && isCountdown)
+        {
+            StopCoroutine(WaveStartBackCount());
+            waveNumberCountdownPanel.SetActive(false);
+            Time.timeScale = 1f;
+            isCountdown = false;
+        }
 
-        base.OpenMenu(obj);
+            base.OpenMenu(obj);
     }
 
     private void ShowGameOverMenu()
@@ -68,4 +80,30 @@ public class UIInGame : UIDisplay
         MainManager.Instance.SetCurPlayerScore();
         MainManager.Instance.SavePlayerData();
     }
+    private void Countdown()
+    {
+        
+        StartCoroutine(WaveStartBackCount());
+    }
+    IEnumerator WaveStartBackCount()
+    {
+        isCountdown = true;
+        Time.timeScale = 0f;
+
+        waveNumberCountdownPanel.SetActive(true);
+        waveNumberCountdownText.text = "Wave " + MainManager.Instance.CurWave;
+        yield return new WaitForSecondsRealtime(countdownTimer);
+        waveNumberCountdownText.text = "3";
+        yield return new WaitForSecondsRealtime(1f);
+        waveNumberCountdownText.text = "2";
+        yield return new WaitForSecondsRealtime(1f);
+        waveNumberCountdownText.text = "1";
+        yield return new WaitForSecondsRealtime(1f);
+        waveNumberCountdownText.text = "Start!";
+        yield return new WaitForSecondsRealtime(countdownTimer);
+        waveNumberCountdownPanel.SetActive(false);
+        Time.timeScale = 1f;
+        isCountdown = false;
+    }
+
 }
