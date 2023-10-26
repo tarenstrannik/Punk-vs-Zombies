@@ -4,7 +4,6 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 using UnityEditor;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class MainManager : MonoBehaviour
 {
@@ -153,8 +152,14 @@ SaveData data = new SaveData
 
 
         string json = JsonUtility.ToJson(data);
+#if UNITY_WEBGL
+        // Выполнить сохранение в PlayerPref
 
+        PlayerPrefs.SetString("PunkVsZombiesSave", json);
+        PlayerPrefs.Save();
+#else
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+#endif
     }
 
 
@@ -188,12 +193,28 @@ SaveData data = new SaveData
 
     public void LoadPlayerData()
     {
+#if UNITY_WEBGL
+        string json = PlayerPrefs.GetString("PunkVsZombiesSave");
+        if (json.Trim() == "")
+        {
+            SetDefaultParams();
+            SetDefaultPlayerParams();
+        }
+#else
         string path = Application.persistentDataPath + "/savefile.json";
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
+           
+        }
+        else
+        {
+            SetDefaultParams();
+            SetDefaultPlayerParams();
+        }
+#endif
             SaveData data = JsonUtility.FromJson<SaveData>(json);
-            if (data != null)
+        if (data != null)
             {
                 if (data.playerName != null)
                 {
@@ -282,12 +303,7 @@ SaveData data = new SaveData
                 SetDefaultParams();
                 SetDefaultPlayerParams();
             }
-        }
-        else
-        {
-            SetDefaultParams();
-            SetDefaultPlayerParams();
-        }
+        
     }
 
     private void SetDefaultParams()
