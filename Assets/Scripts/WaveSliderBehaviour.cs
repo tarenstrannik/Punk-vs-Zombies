@@ -19,6 +19,7 @@ public class WaveSliderBehaviour : MonoBehaviour
     {
         waveText.text = "" + (int)waveSlider.value;
         MainManager.Instance.CurWave = (int)waveSlider.value;
+        
 
     }
 }

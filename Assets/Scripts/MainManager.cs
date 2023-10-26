@@ -241,14 +241,16 @@ SaveData data = new SaveData
                     if (targetGameParamSavedWave != null)
                     {
                         SavedWave = targetGameParamSavedWave.paramIntValue;
-
+                    
 
                         // Делаем с объектом GameParam то, что вам нужно
                     }
                     else
                     {
                         SavedWave = 1;
+
                     }
+                    CurWave = SavedWave;
                     GameParam targetGameParamMaxWave = data.gameParams.gameParam.FirstOrDefault(param => param.paramName == "maxWave");
 
                     // Проверяем, был ли найден объект GameParam с заданным paramName
