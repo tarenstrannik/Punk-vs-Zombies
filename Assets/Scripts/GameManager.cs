@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public int Score { get; private set; } = 0;
     public PlayerController playerController;
 
+    [SerializeField] private float beforeNewRoundDelay = 1f;
     private void Awake()
     {
         if (Instance != null)
@@ -93,7 +94,7 @@ public class GameManager : MonoBehaviour
         }
         MainManager.Instance.SavePlayerData();
         
-        StartRound();
+        Invoke("StartRound", beforeNewRoundDelay);
     }
 
     public void GameOver()

@@ -9076,9 +9076,9 @@ MonoBehaviour:
   enemySpawnRangeZ: 10
   maxPowerupCount: 1
   minSoftObstacles: 0
-  maxSoftObstacles: 6
+  maxSoftObstacles: 4
   minHardObstacles: 0
-  maxHardObstacles: 6
+  maxHardObstacles: 4
   directionalLight: {fileID: 705507993}
 --- !u!114 &1952434199
 MonoBehaviour:

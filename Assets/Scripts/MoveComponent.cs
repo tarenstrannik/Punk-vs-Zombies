@@ -5,8 +5,8 @@ using UnityEngine;
 public class MoveComponent : MonoBehaviour
 {
     protected float speedCoef = 1;
-    [SerializeField] protected float speedSlow = 0.5f;
-    [SerializeField] protected float speedNormal = 1f;
+    [SerializeField] protected float speedSlowCoef = 0.5f;
+    [SerializeField] protected float speedNormalCoef = 1f;
 
     protected Animator personAnim;
     protected Rigidbody personRb;
@@ -26,11 +26,11 @@ public class MoveComponent : MonoBehaviour
 
     private void SlowDown()
     {
-        speedCoef = speedSlow;
+        speedCoef = speedSlowCoef;
     }
     private void SpeedUp()
     {
-        speedCoef = speedNormal;
+        speedCoef = speedNormalCoef;
     }
 
     public void DieAnim()
