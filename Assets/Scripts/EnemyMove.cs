@@ -69,7 +69,7 @@ public class EnemyMove : MoveComponent
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * speedCoef);
         personRb.AddForce(direction * speedForce * speedCoef);
 
-        AnimateMovement();
+
     }
 
     protected override void AnimateMovement()

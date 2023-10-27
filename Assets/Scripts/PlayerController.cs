@@ -96,17 +96,22 @@ public class PlayerController : PersonController
     {
         if (Input.GetButtonDown("Shoot"))
         {
-            playerAudioSource.PlayOneShot(shootAudio);
+            
+            playerMove.SendMessage("Shoot");
 
-            GameObject pooledBullet = ObjectPooler.SharedInstance.GetPooledObject(bulletPrefab);
-            if (pooledBullet != null)
-            {
-                pooledBullet.SetActive(true); // activate it
-                
-                pooledBullet.transform.position = shootingPoint.transform.position;
-                pooledBullet.transform.rotation = shootingPoint.transform.rotation;
-            }
-           
+        }
+    }
+    private void ShootBullet()
+    {
+        playerAudioSource.PlayOneShot(shootAudio);
+
+        GameObject pooledBullet = ObjectPooler.SharedInstance.GetPooledObject(bulletPrefab);
+        if (pooledBullet != null)
+        {
+            pooledBullet.SetActive(true); // activate it
+
+            pooledBullet.transform.position = shootingPoint.transform.position;
+            pooledBullet.transform.rotation = shootingPoint.transform.rotation;
         }
     }
 

@@ -20,8 +20,11 @@ public class MoveComponent : MonoBehaviour
     [SerializeField] protected float speed = 5f;
     [SerializeField] protected float rotationSpeed = 20f;
 
-    private float maxVelocity = 0f;
-    // Start is called before the first frame update
+    protected virtual void LateUpdate()
+    {
+        AnimateMovement();
+    }
+   
     void OnEnable()
     {
         personAnim = GetComponentInChildren<Animator>();
@@ -58,10 +61,6 @@ public class MoveComponent : MonoBehaviour
         //Debug.Log(speed * speedCoef * animSpeedCoef);
         personAnim.SetFloat("SpeedCoef_f", personRb.velocity.magnitude / velocityConst) ;
 
-        if (personRb.velocity.magnitude > maxVelocity)
-        {
-            maxVelocity = personRb.velocity.magnitude;
-            Debug.Log(this.gameObject.name + " " + maxVelocity);
-        }
+       
     }
 }

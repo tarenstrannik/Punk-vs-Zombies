@@ -7,8 +7,13 @@ public class PlayerMove : MoveComponent
     //restriction params
     [SerializeField] private Vector3 bottomLeft;
     [SerializeField] private Vector3 topRight;
-
-
+    [SerializeField] private float shootingTimeout = 2f;
+    private Coroutine shootingTimeoutCoroutine;
+    private void Start()
+    {
+        
+        
+    }
 
     private void PlayerMovement()
     {
@@ -50,5 +55,21 @@ public class PlayerMove : MoveComponent
             transform.position = new Vector3(transform.position.x, transform.position.y, topRight.z);
 
         }
+    }
+    private void Shoot()
+    {
+
+        personAnim.SetTrigger("Shoot_t");
+        personAnim.SetInteger("WeaponType_int", 1);
+        if(shootingTimeoutCoroutine!=null)
+        {
+            StopCoroutine(shootingTimeoutCoroutine);
+        }
+        shootingTimeoutCoroutine = StartCoroutine(ShootingTimeoutCor());
+    }
+    IEnumerator  ShootingTimeoutCor()
+    {
+        yield return new WaitForSeconds(shootingTimeout);
+        personAnim.SetInteger("WeaponType_int", 0);
     }
 }
