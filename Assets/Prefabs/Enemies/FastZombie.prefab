@@ -118,7 +118,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1772190259293243726}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 1
   m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -149,12 +149,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81700c3dfeeae6b40aa12dbb1dabd23e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedSlow: 0.7
-  speedNormal: 1
-  speed: 8
+  speedSlowCoef: 0.3
+  speedNormalCoef: 1
+  velocityConst: 3
+  animNormalSpeedCoef: 0.126
+  animSlowSpeedCoef: 0.25
+  speed: 0
   rotationSpeed: 20
-  gravityCoef: 0.5
-  animSpeedCoef: 0.1
+  gravityCoef: 0.3
+  speedForce: 4
   randomMovementPhase: 2
   randDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &7124171026039135980

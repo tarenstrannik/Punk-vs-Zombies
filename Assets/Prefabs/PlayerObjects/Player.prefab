@@ -214,12 +214,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de968badc02ebb54da3a015bcb1df652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxPersonHealth: 10
   bulletPrefab: {fileID: 7256542726847729892, guid: 10af888afefcba54ebfd09ec5e91f29c, type: 3}
   shootingPoint: {fileID: 7385333000542080262}
   shootAudio: {fileID: 8300000, guid: 430a890fb607d471db897c36240711fa, type: 3}
   damageAudio: {fileID: 8300000, guid: 4a812d476bd234fcdad7cc31ff6e9473, type: 3}
   healingAudio: {fileID: 8300000, guid: dc028d92bd81f4023ae9b67676dad909, type: 3}
   deathAudio: {fileID: 8300000, guid: ef2cde67276e7490e860213ae5393038, type: 3}
+  uiDisplayObject: {fileID: 0}
 --- !u!114 &3839425327700095942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,8 +363,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: decba905b046ad84db08c1e4c8b142ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedSlow: 0.5
-  speedNormal: 1
+  speedSlowCoef: 0.5
+  speedNormalCoef: 1
+  velocityConst: 5
+  animNormalSpeedCoef: 0.12
+  animSlowSpeedCoef: 0.12
   speed: 5
   rotationSpeed: 100
   bottomLeft: {x: -12, y: 0, z: -6.5}

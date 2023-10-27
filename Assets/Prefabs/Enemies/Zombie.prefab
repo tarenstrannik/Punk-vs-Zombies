@@ -149,12 +149,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81700c3dfeeae6b40aa12dbb1dabd23e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedSlow: 0.7
-  speedNormal: 1
+  speedSlowCoef: 0.6
+  speedNormalCoef: 1
+  velocityConst: 4.5
+  animNormalSpeedCoef: 0.12
+  animSlowSpeedCoef: 0.12
   speed: 4
   rotationSpeed: 20
-  gravityCoef: 0.5
-  animSpeedCoef: 0.1
+  gravityCoef: 0.3
+  speedForce: 4
   randomMovementPhase: 2
   randDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &6603768000946474549
