@@ -111,7 +111,8 @@ public class PlayerController : PersonController
             pooledBullet.SetActive(true); // activate it
 
             pooledBullet.transform.position = shootingPoint.transform.position;
-            pooledBullet.transform.rotation = shootingPoint.transform.rotation;
+            
+            pooledBullet.transform.rotation = Quaternion.Euler(0f, shootingPoint.transform.rotation.eulerAngles.y, shootingPoint.transform.rotation.eulerAngles.z); 
         }
     }
 
