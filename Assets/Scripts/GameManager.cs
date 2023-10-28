@@ -36,13 +36,13 @@ public class GameManager : MonoBehaviour
 
         if (MainManager.Instance.SavedWave != 1 && MainManager.Instance.SavedWave== MainManager.Instance.CurWave)
         {
-
             playerController.SendMessage("resetHealthToValue", MainManager.Instance.SavedPlayerHealth);
             Score = MainManager.Instance.SavedPlayerScore;
             uiDisplay.SendMessage("UpdateScore", MainManager.Instance.SavedPlayerScore);
         }
         else
         {
+            MainManager.Instance.SavePlayerData();
             int zeroScore = 0;
             uiDisplay.SendMessage("UpdateScore", zeroScore);
             // MainManager.Instance.CurWave = 1;
