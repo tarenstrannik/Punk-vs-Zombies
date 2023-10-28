@@ -7,7 +7,7 @@ public class ContinueGameOperations : MonoBehaviour
 {
     [SerializeField] private Button continueButton;
     [SerializeField] private Button leadersButton;
-    [SerializeField] private GameObject newGameText;
+    
     [SerializeField] private GameObject newGameTextAttention;
     private void Start()
     {
@@ -15,13 +15,13 @@ public class ContinueGameOperations : MonoBehaviour
         if(MainManager.Instance.SavedWave!=1)
         {
             continueButton.interactable = true;
-            newGameText.SetActive(false);
+            
             newGameTextAttention.SetActive(true);
         }
         else
         {
             continueButton.interactable = false;
-            newGameText.SetActive(true);
+            
             newGameTextAttention.SetActive(false);
         }
 
