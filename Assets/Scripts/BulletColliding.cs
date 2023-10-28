@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletColliding : MonoBehaviour
 {
-
+    private Rigidbody bulletRb;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -19,7 +19,8 @@ public class BulletColliding : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         Vector3 collisionNormal = contact.normal;
         Quaternion normalRotation = Quaternion.LookRotation(collisionNormal, Vector3.up);
-        float newYAngle =  180 - 2*transform.rotation.y+ 2 * normalRotation.eulerAngles.y;
+
+        float newYAngle =  180 - 2*transform.rotation.eulerAngles.y + 2 * normalRotation.eulerAngles.y;
 
         transform.Rotate(Vector3.up, newYAngle);
     }
