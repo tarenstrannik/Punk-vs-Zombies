@@ -29,7 +29,7 @@ public class PlayerMove : MoveComponent
         // playerRb.AddForce(Vector3.forward * speed * speedCoef * verticalInput);
         //playerRb.AddForce(Vector3.right * speed * speedCoef * horizontalInput);
         personRb.velocity = Vector3.forward * speed * speedCoef * verticalInput + Vector3.right * speed * speedCoef * horizontalInput;
-        AnimateMovement();
+        
         transform.Rotate(Vector3.up, rotationSpeed * speedCoef * Time.deltaTime * rotationInput);
 
     }

@@ -20,6 +20,7 @@ public class MoveComponent : MonoBehaviour
     [SerializeField] protected float speed = 5f;
     [SerializeField] protected float rotationSpeed = 20f;
 
+    [SerializeField] private float minAnimationSpeed = 0.3f;
     protected virtual void LateUpdate()
     {
         AnimateMovement();
@@ -57,9 +58,11 @@ public class MoveComponent : MonoBehaviour
 
     protected virtual void AnimateMovement()
     {
+        
         personAnim.SetFloat("Speed_f", personRb.velocity.magnitude * animCoef);
         //Debug.Log(speed * speedCoef * animSpeedCoef);
-        personAnim.SetFloat("SpeedCoef_f", personRb.velocity.magnitude / velocityConst) ;
+        float curAnimationSpeed = personRb.velocity.magnitude / velocityConst > minAnimationSpeed ? personRb.velocity.magnitude / velocityConst : minAnimationSpeed;
+        personAnim.SetFloat("SpeedCoef_f", curAnimationSpeed);
 
        
     }
