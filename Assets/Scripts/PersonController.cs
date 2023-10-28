@@ -49,6 +49,6 @@ public class PersonController : MonoBehaviour
     {
         PersonHealth = maxPersonHealth;
         IsDead = false;
-       
+        gameObject.SendMessage("SpeedUp");
     }
 }

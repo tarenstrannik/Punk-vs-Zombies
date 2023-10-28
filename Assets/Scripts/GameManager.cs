@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
         SpawnManager.Instance.GenerateBackground();
         SpawnManager.Instance.WeatherGeneration();
         uiDisplay.SendMessage("Countdown");
+        playerController.SendMessage("SpeedUp");
     }
     private void EndRound()
     {

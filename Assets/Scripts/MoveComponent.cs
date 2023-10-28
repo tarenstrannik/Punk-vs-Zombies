@@ -45,6 +45,7 @@ public class MoveComponent : MonoBehaviour
     }
     private void SpeedUp()
     {
+        
         animCoef = animNormalSpeedCoef;
         speedCoef = speedNormalCoef;
     }
