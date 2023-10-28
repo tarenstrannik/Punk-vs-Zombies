@@ -15,8 +15,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private List<Material> backgroundTextures;
     [SerializeField] private GameObject plane;
     private MeshRenderer planeMeshRenderer;
-    [SerializeField] private float powerupAndObstacleSpawnRangeX = 14f;
-    [SerializeField] private float powerupAndObstacleSpawnRangeZ = 7.5f;
+    [SerializeField] private float obstacleSpawnRangeX = 14f;
+    [SerializeField] private float obstacleSpawnRangeZ = 7.5f;
+
+    [SerializeField] private float powerupSpawnRangeX = 13f;
+    [SerializeField] private float powerupSpawnRangeZ = 7f;
 
     [SerializeField] private float powerupSpawnDelayMin = 3f;
     [SerializeField] private float powerupSpawnDelayMax = 10f;
@@ -99,7 +102,7 @@ public class SpawnManager : MonoBehaviour
         {
             pooledPowerup.SetActive(true); // activate it
 
-            pooledPowerup.transform.position = GenerateSpawnPosition(powerupAndObstacleSpawnRangeX, powerupAndObstacleSpawnRangeZ, powerupsPrefabs[powerupIndex].transform.localScale.y / 2);
+            pooledPowerup.transform.position = GenerateSpawnPosition(powerupSpawnRangeX, powerupSpawnRangeZ, powerupsPrefabs[powerupIndex].transform.localScale.y / 2);
         }
         GameManager.Instance.SetPowerupWaiting(false);
         
@@ -163,7 +166,7 @@ public class SpawnManager : MonoBehaviour
 
             pooledObstacle.SetActive(true); // activate it
             pooledObstacle.transform.Rotate(Vector3.up, randYRot);
-            pooledObstacle.transform.position = GenerateSpawnPosition(powerupAndObstacleSpawnRangeX, powerupAndObstacleSpawnRangeZ, obstaclesPrefabs[obstacleIndex].transform.localScale.y / 2);
+            pooledObstacle.transform.position = GenerateSpawnPosition(obstacleSpawnRangeX, obstacleSpawnRangeZ, obstaclesPrefabs[obstacleIndex].transform.localScale.y / 2);
         }
     }
 

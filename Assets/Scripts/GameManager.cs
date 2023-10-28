@@ -63,9 +63,12 @@ public class GameManager : MonoBehaviour
     }
     public void CheckPowerups()
     {
+        
         powerupCount = GameObject.FindGameObjectsWithTag("Powerup").Length;
+
         if (powerupCount == 0 && !waitingForPowerUp)
         {
+
             waitingForPowerUp = true;
             SpawnManager.Instance.InitPowerupGeneration();
         }

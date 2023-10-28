@@ -25,6 +25,7 @@ public class PlayerColliding : PersonColliding
         {
             other.gameObject.SetActive(false);
             personController.SendMessage("ReceiveDamage", -other.gameObject.GetComponent<PowerupController>().powerupStrength);
+            GameManager.Instance.CheckPowerups();
             //player recieved powerup
         }
        

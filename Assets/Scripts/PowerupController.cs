@@ -5,8 +5,8 @@ using UnityEngine;
 public class PowerupController : MonoBehaviour
 {
     public float powerupStrength = 1f;
-    private void OnDisable()
+    /*private void OnDisable()
     {
         GameManager.Instance.CheckPowerups();
-    }
+    }*/
 }
