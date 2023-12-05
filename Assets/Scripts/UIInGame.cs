@@ -11,6 +11,7 @@ public class UIInGame : UIDisplay
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject gameoverScreen;
     [SerializeField] private GameObject bestscoreScreen;
+    [SerializeField] private GameObject inGameUIScreen;
 
     [SerializeField] private GameObject waveNumberCountdownPanel;
     [SerializeField] private TextMeshProUGUI waveNumberCountdownText;
@@ -52,6 +53,7 @@ public class UIInGame : UIDisplay
             
             Time.timeScale = Time.timeScale == 1f ? 0f : 1f;
             pauseScreen.SetActive(!pauseScreen.activeSelf);
+            inGameUIScreen.SetActive(!inGameUIScreen.activeSelf);
             curMenu = pauseScreen.activeSelf==true ? pauseScreen : null;
         }
         else if (target == null && MainManager.Instance.isGameActive && (curMenu == null || curMenu == pauseScreen) && isCountdown)
@@ -61,6 +63,7 @@ public class UIInGame : UIDisplay
             waveNumberCountdownPanel.SetActive(false);
             Time.timeScale = 1f;
             isCountdown = false;
+            inGameUIScreen.SetActive(true);
         }
 
             base.OpenMenu(obj);
@@ -107,6 +110,7 @@ public class UIInGame : UIDisplay
         waveNumberCountdownPanel.SetActive(false);
         Time.timeScale = 1f;
         isCountdown = false;
+        inGameUIScreen.SetActive(true);
     }
 
 }

@@ -193,8 +193,9 @@ SaveData data = new SaveData
 
     public void LoadPlayerData()
     {
+        string json = "";
 #if UNITY_WEBGL
-        string json = PlayerPrefs.GetString("PunkVsZombiesSave");
+        json = PlayerPrefs.GetString("PunkVsZombiesSave");
         if (json.Trim() == "")
         {
             SetDefaultParams();
@@ -204,7 +205,7 @@ SaveData data = new SaveData
         string path = Application.persistentDataPath + "/savefile.json";
         if (File.Exists(path))
         {
-            string json = File.ReadAllText(path);
+             json = File.ReadAllText(path);
            
         }
         else
