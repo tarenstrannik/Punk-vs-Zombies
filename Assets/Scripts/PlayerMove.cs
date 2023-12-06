@@ -58,7 +58,7 @@ public class PlayerMove : MoveComponent
             transform.position = new Vector3(topRight.x, transform.position.y, transform.position.z);
 
         }
-        else if (transform.position.z < bottomLeft.z)
+        if (transform.position.z < bottomLeft.z)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, bottomLeft.z);
 

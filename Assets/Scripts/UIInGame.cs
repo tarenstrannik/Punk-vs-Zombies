@@ -75,6 +75,7 @@ public class UIInGame : UIDisplay
 
     private void ShowGameOverMenu()
     {
+        inGameUIScreen.SetActive(!inGameUIScreen.activeSelf);
         gameoverScreen.SetActive(true);
         curMenu = gameoverScreen;
     }
