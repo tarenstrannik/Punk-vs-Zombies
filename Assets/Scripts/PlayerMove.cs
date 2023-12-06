@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class PlayerMove : MoveComponent
 {
     //restriction params
@@ -9,30 +9,43 @@ public class PlayerMove : MoveComponent
     [SerializeField] private Vector3 topRight;
     [SerializeField] private float shootingTimeout = 2f;
     private Coroutine shootingTimeoutCoroutine;
+
+    private float horizontalInput;
+    private float verticalInput;
+    private float rotationInput;
     private void Start()
     {
         
         
     }
 
-    private void PlayerMovement()
+    private void PlayerMovement(Vector2 value)
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        float rotationInput = Input.GetAxis("Rotation");
+        horizontalInput = value.x;
+        verticalInput = value.y;      
+    }
+    private void PlayerRotation(Vector2 value)
+    {
+        rotationInput = value.x;
+        
+    }
 
-        Vector3 globalForward = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * Vector3.forward;
-        Vector3 globalRight = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * Vector3.right;
+    private void FixedUpdate()
+    {
+        //Vector3 globalForward = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * Vector3.forward;
+        //Vector3 globalRight = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * Vector3.right;
 
         //transform.Translate(globalForward * speed * speedCoef* Time.deltaTime * verticalInput);
         //transform.Translate(globalRight * speed * speedCoef * Time.deltaTime * horizontalInput);
         // playerRb.AddForce(Vector3.forward * speed * speedCoef * verticalInput);
         //playerRb.AddForce(Vector3.right * speed * speedCoef * horizontalInput);
-        personRb.velocity = Vector3.forward * speed * speedCoef * verticalInput + Vector3.right * speed * speedCoef * horizontalInput;
-        
-        transform.Rotate(Vector3.up, rotationSpeed * speedCoef * Time.deltaTime * rotationInput);
 
+        personRb.velocity = Vector3.forward * speed * speedCoef * verticalInput + Vector3.right * speed * speedCoef * horizontalInput;
+
+        transform.Rotate(Vector3.up, rotationSpeed * speedCoef * Time.deltaTime * rotationInput);
+        ConstraintPlayer();
     }
+
     private void ConstraintPlayer()
     {
         if (transform.position.x < bottomLeft.x)

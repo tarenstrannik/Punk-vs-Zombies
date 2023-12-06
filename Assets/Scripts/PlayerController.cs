@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //using UnityEngine.Windows;
+using UnityEngine.InputSystem;
 
 public class PlayerController : PersonController
 {
@@ -22,7 +23,7 @@ public class PlayerController : PersonController
     private UIDisplay uiDisplay;
     private PlayerMove playerMove;
 
-    
+    [SerializeField] UIDisplay m_gameUI;
     
     protected override void Awake()
     {
@@ -45,17 +46,53 @@ public class PlayerController : PersonController
     protected override void Update()
     {
         base.Update();
-        if (!IsDead)
-        {
-            PlayerShoot();
-            playerMove.SendMessage("PlayerMovement");
-            playerMove.SendMessage("ConstraintPlayer");
-        }
-
-        
-
+       
 
     }
+   /* protected void FixedUpdate()
+    {
+         if (!IsDead)
+        {
+            //PlayerShoot();
+            //playerMove.SendMessage("PlayerMovement");
+            playerMove.SendMessage("ConstraintPlayer");
+        }
+    }*/
+
+    private void OnCancel()
+    {
+        m_gameUI.SendMessage("OnCancel", SendMessageOptions.DontRequireReceiver);
+    }
+
+    private void OnMove(InputValue value)
+    {
+        if(!IsDead)
+        {
+            playerMove.SendMessage("PlayerMovement", value.Get<Vector2>());
+        }
+    }
+    private void OnMove(Vector2 direction)
+    {
+        if (!IsDead)
+        {
+            playerMove.SendMessage("PlayerMovement", direction);
+        }
+    }
+    private void OnRotate(InputValue value)
+    {
+        if (!IsDead)
+        {
+            playerMove.SendMessage("PlayerRotation", value.Get<Vector2>());
+        }
+    }
+    private void OnRotate(Vector2 direction)
+    {
+        if (!IsDead)
+        {
+            playerMove.SendMessage("PlayerRotation", direction);
+        }
+    }
+
     private void resetHealthToValue(float value)
     {
         PersonHealth = value;
@@ -92,14 +129,16 @@ public class PlayerController : PersonController
             GameManager.Instance.GameOver();
         }
     }
-    private void PlayerShoot()
+    private void OnFire()
     {
-        if (Input.GetButtonDown("Shoot"))
-        {
-            
-            playerMove.SendMessage("Shoot");
 
+        //if (Input.GetButtonDown("Shoot"))
+        //{
+        if (!IsDead)
+        {
+            playerMove.SendMessage("Shoot");
         }
+        //}
     }
     private void ShootBullet()
     {

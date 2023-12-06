@@ -18,6 +18,8 @@ public class UIInGame : UIDisplay
     [SerializeField] private float countdownTimer = 1f;
     private bool isCountdown=false;
 
+    [SerializeField] private PlayerCustomInput m_playerInput;
+
     private Coroutine countdownCoroutine;
     // Start is called before the first frame update
     protected override void Start()
@@ -55,6 +57,7 @@ public class UIInGame : UIDisplay
             pauseScreen.SetActive(!pauseScreen.activeSelf);
             inGameUIScreen.SetActive(!inGameUIScreen.activeSelf);
             curMenu = pauseScreen.activeSelf==true ? pauseScreen : null;
+            m_playerInput.ResetSticks();
         }
         else if (target == null && MainManager.Instance.isGameActive && (curMenu == null || curMenu == pauseScreen) && isCountdown)
         {
@@ -64,6 +67,7 @@ public class UIInGame : UIDisplay
             Time.timeScale = 1f;
             isCountdown = false;
             inGameUIScreen.SetActive(true);
+            
         }
 
             base.OpenMenu(obj);

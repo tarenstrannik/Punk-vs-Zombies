@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using System.Data.Common;
 using UnityEngine.SceneManagement;
 using UnityEditor;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(AudioSource))] 
 public class UIDisplay : MonoBehaviour
@@ -33,12 +34,16 @@ public class UIDisplay : MonoBehaviour
     
     protected virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+       /* if (Input.GetKeyDown(KeyCode.Escape))
         {
             ActionWithDelay(escapeEvent);
-        }
+        }*/
     }
 
+    protected virtual void OnCancel()
+    {
+        ActionWithDelay(escapeEvent);
+    }
     public void ButtonActionWithDelay(Button button)
     {
         ActionWithDelay(button.GetComponent<ButtonOptions>().ButtonAction);
