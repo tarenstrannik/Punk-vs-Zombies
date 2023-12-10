@@ -82,6 +82,7 @@ public class UIInGame : UIDisplay
 
     private void ShowBestScoreMenu()
     {
+        inGameUIScreen.SetActive(!inGameUIScreen.activeSelf);
         bestscoreScreen.SetActive(true);
         curMenu = bestscoreScreen;
         prevMenu = gameoverScreen;
@@ -102,6 +103,7 @@ public class UIInGame : UIDisplay
         Time.timeScale = 0f;
 
         waveNumberCountdownPanel.SetActive(true);
+        inGameUIScreen.SetActive(false);
         waveNumberCountdownText.text = "Wave " + MainManager.Instance.CurWave;
         yield return new WaitForSecondsRealtime(countdownTimer);
         waveNumberCountdownText.text = "3";

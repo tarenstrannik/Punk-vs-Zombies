@@ -108,8 +108,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.39, z: 1}
-  m_Center: {x: 0, y: 0.2, z: 0}
+  m_Size: {x: 1, y: 1.4602736, z: 1}
+  m_Center: {x: 0, y: 0.2351368, z: 0}
 --- !u!54 &8561536355193340664
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -156,6 +156,7 @@ MonoBehaviour:
   animSlowSpeedCoef: 0.25
   speed: 0
   rotationSpeed: 20
+  minAnimationSpeed: 0.3
   gravityCoef: 0.3
   speedForce: 4
   randomMovementPhase: 2
