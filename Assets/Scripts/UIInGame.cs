@@ -117,7 +117,9 @@ public class UIInGame : UIDisplay
         waveNumberCountdownPanel.SetActive(false);
         Time.timeScale = 1f;
         isCountdown = false;
+        m_playerInput.ResetSticks();
         inGameUIScreen.SetActive(true);
+
     }
 
 }
