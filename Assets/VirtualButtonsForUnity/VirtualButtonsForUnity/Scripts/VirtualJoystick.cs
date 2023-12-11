@@ -14,7 +14,7 @@ public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     [SerializeField] private RectTransform centerArea = null;
     [SerializeField] private RectTransform handle = null;
     [InputControl(layout = "Vector2")]
-    [SerializeField] private string stickControlPath;
+    //[SerializeField] private string stickControlPath;
     [SerializeField] private float movementRange = 100f;
 
     protected VirtualJoystickType joystickType = VirtualJoystickType.Fixed;
@@ -22,7 +22,7 @@ public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     protected bool _centralizeOnPointerUp = true;
     private Canvas canvas;
     protected RectTransform baseRect = null;
-    protected OnScreenStick handleStickController = null;
+    protected OnScreenStickCustom handleStickController = null;
     protected CanvasGroup bgCanvasGroup = null;
     protected Vector2 initialPosition = Vector2.zero;
 
@@ -31,9 +31,10 @@ public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         canvas = GetComponentInParent<Canvas>();
         baseRect = GetComponent<RectTransform>();
         bgCanvasGroup = centerArea.GetComponent<CanvasGroup>();
-        handleStickController = handle.gameObject.AddComponent<OnScreenStick>();
+        handleStickController = handle.gameObject.AddComponent<OnScreenStickCustom>();
+        //handleStickController = handle.gameObject.AddComponent<OnScreenStick>();
         handleStickController.movementRange = movementRange;
-        handleStickController.controlPath = stickControlPath;
+        //handleStickController.controlPath = stickControlPath;
 
         Vector2 center = new Vector2(0.5f, 0.5f);
         centerArea.pivot = center;
@@ -95,7 +96,22 @@ public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
         handleStickController.OnPointerUp(constructedEventData);
     }
+    public void OnPointerUpZero()
+    {
+        if (joystickType == VirtualJoystickType.Floating)
+        {
+            if (_centralizeOnPointerUp)
+                centerArea.anchoredPosition = initialPosition;
 
+            if (_hideOnPointerUp) bgCanvasGroup.alpha = 0;
+            else bgCanvasGroup.alpha = 1;
+        }
+
+        PointerEventData constructedEventData = new PointerEventData(EventSystem.current);
+        constructedEventData.position = Vector2.zero;
+
+        handleStickController.OnPointerUp(constructedEventData);
+    }
     protected Vector2 GetAnchoredPosition(Vector2 screenPosition)
     {
         Camera cam = (canvas.renderMode == RenderMode.ScreenSpaceCamera) ? canvas.worldCamera : null;

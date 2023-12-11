@@ -47,9 +47,10 @@ public class GameManager : MonoBehaviour
             uiDisplay.SendMessage("UpdateScore", zeroScore);
             // MainManager.Instance.CurWave = 1;
         }
-        waitingForPowerUp = true;
-        SpawnManager.Instance.InitPowerupGeneration();
-       
+        
+       /* waitingForPowerUp = true;
+        SpawnManager.Instance.InitPowerupGeneration();*/
+
     }
 
     public void CheckEnemiesLeft()
@@ -103,6 +104,8 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        MainManager.Instance.isGameActive = false;
+        CancelInvoke();
         if (Score > MainManager.Instance.GetBestScore())
         {
             uiDisplay.SendMessage("ShowBestScoreMenu");

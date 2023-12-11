@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2409145431103198956}
   - component: {fileID: 3878631085679315266}
   - component: {fileID: 8433661952974116007}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bush_1 (Soft)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}

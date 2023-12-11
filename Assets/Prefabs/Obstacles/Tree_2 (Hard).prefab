@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2797288918793214510}
   - component: {fileID: 5264067424252901696}
   - component: {fileID: 652925556317260912}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leaves_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2249549841400278666}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leaves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 2056166944166806556}
   - component: {fileID: 2930253385451667682}
   - component: {fileID: 1634708620092114553}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tree_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 7260817348411332614}
   - component: {fileID: 8236792678582493887}
   - component: {fileID: 549003076855699134}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leaves_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 6564475688258957152}
   - component: {fileID: 6176726100865497240}
   - component: {fileID: 3056048279467236981}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leaves_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -378,7 +378,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8657783121703155625}
   - component: {fileID: 1563487729576989053}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tree_2 (Hard)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -436,7 +436,7 @@ GameObject:
   - component: {fileID: 9184680708974925532}
   - component: {fileID: 7339011371520110993}
   - component: {fileID: 2444359081194740469}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leaves_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,7 +519,7 @@ GameObject:
   - component: {fileID: 1527555290708171811}
   - component: {fileID: 6321588478446063061}
   - component: {fileID: 6589101488719426413}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leaves_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

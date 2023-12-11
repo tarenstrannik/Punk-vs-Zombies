@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6305313166494008732}
   - component: {fileID: 1665760774698394380}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tree05 (Hard)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 5652536804599359367}
   - component: {fileID: 2426234297266820514}
   - component: {fileID: 6198655964754445018}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leaves01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 3893145329810694724}
   - component: {fileID: 4043371214421968174}
   - component: {fileID: 7924590610964862613}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leaves02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 8118220285723510440}
   - component: {fileID: 1760089276453564999}
   - component: {fileID: 2511650592337375453}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}

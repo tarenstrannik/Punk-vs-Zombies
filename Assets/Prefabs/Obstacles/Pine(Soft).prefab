@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2207554626625333692}
   - component: {fileID: 4572784908148279564}
   - component: {fileID: 8980726939490254256}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leaves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3039972965986245582}
   - component: {fileID: 1620898999063540246}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pine(Soft)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 5454182685432784890}
   - component: {fileID: 1495321525891458282}
   - component: {fileID: 1549453216167876416}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}

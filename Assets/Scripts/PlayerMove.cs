@@ -12,7 +12,8 @@ public class PlayerMove : MoveComponent
 
     private float horizontalInput;
     private float verticalInput;
-    private float rotationInput;
+    private Vector3 m_curDirection = new Vector3(0,0,1);
+    private float m_rotationSpeedCoef = 1;
     private void Start()
     {
         
@@ -26,7 +27,10 @@ public class PlayerMove : MoveComponent
     }
     private void PlayerRotation(Vector2 value)
     {
-        rotationInput = value.x;
+        
+        m_rotationSpeedCoef = value.magnitude;
+        if (m_rotationSpeedCoef!=0)
+            m_curDirection = new Vector3(value.normalized.x,0, value.normalized.y);
         
     }
 
@@ -42,7 +46,12 @@ public class PlayerMove : MoveComponent
 
         personRb.velocity = Vector3.forward * speed * speedCoef * verticalInput + Vector3.right * speed * speedCoef * horizontalInput;
 
-        transform.Rotate(Vector3.up, rotationSpeed * speedCoef * Time.deltaTime * rotationInput);
+        //transform.Rotate(Vector3.up, rotationSpeed * speedCoef * Time.deltaTime * rotationInput);
+        Quaternion targetRotation = Quaternion.LookRotation(m_curDirection, Vector3.up);
+        
+
+        // Интерполируем текущий поворот к целевому повороту с постоянной скоростью
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         ConstraintPlayer();
     }
 

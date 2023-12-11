@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1271393100788136803}
   - component: {fileID: 1272597297581675218}
   - component: {fileID: 6792110182242649201}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Log_3 (Hard)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}

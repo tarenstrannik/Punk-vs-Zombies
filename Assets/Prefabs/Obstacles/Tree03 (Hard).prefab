@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1667398968173659299}
   - component: {fileID: 4689806615776327949}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tree03 (Hard)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ GameObject:
   - component: {fileID: 3317571190508532278}
   - component: {fileID: 5986524173559953691}
   - component: {fileID: 7613427268856027586}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}

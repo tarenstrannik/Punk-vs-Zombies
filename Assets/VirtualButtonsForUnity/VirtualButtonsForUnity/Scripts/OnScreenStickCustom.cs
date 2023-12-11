@@ -117,10 +117,11 @@ using UnityEditor.AnimatedValues;
         }
         public void ResetStickPos()
         {
-        EndInteraction();
+            EndInteraction();
         }
         private void BeginInteraction(Vector2 pointerPosition, Camera uiCamera)
         {
+       
             var canvasRect = transform.parent?.GetComponentInParent<RectTransform>();
             if (canvasRect == null)
             {

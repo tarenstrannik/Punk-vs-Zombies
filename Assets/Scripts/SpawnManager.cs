@@ -41,9 +41,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int maxHardObstacles = 6;
 
     [SerializeField] private GameObject directionalLight;
-   
-    // Start is called before the first frame update
 
+    // Start is called before the first frame update
+    //[SerializeField] private AudioClip testclip;
     public static SpawnManager Instance { get; private set; }
     private void Awake()
     {
@@ -74,6 +74,7 @@ public class SpawnManager : MonoBehaviour
             ObjectPooler.SharedInstance.PushObjectToPool(gameObj, maxPowerupCount);
         }
         MainManager.Instance.isGameActive =true;
+        GameManager.Instance.SendMessage("CheckPowerups");
         GameManager.Instance.SendMessage("StartRound");
     }
 
@@ -102,9 +103,10 @@ public class SpawnManager : MonoBehaviour
         {
             pooledPowerup.SetActive(true); // activate it
 
-            pooledPowerup.transform.position = GenerateSpawnPosition(powerupSpawnRangeX, powerupSpawnRangeZ, powerupsPrefabs[powerupIndex].transform.localScale.y / 2);
+            pooledPowerup.transform.position = GenerateSpawnPosition(powerupSpawnRangeX, powerupSpawnRangeZ, powerupsPrefabs[powerupIndex].transform.localScale.y );
         }
         GameManager.Instance.SetPowerupWaiting(false);
+        //GetComponent<AudioSource>().PlayOneShot(testclip);
         
     }
     public void SpawnEnemyWave(int enemiesToSpawn)
